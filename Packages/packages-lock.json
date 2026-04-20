@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.distantlands.cozy.core": {
+      "version": "file:com.distantlands.cozy.core",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.occasoftware.super-simple-skybox": {
       "version": "file:com.occasoftware.super-simple-skybox",
       "depth": 0,
