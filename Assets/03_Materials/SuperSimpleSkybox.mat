@@ -204,7 +204,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _GroundEnabled: 1
+    - _GroundEnabled: 0
     - _GroundFadeAmount: 0.02
     - _Ground_Fade: -0.01
     - _Ground_Height: -0.02
@@ -239,7 +239,7 @@ Material:
     - _Star_Frequency: 0
     - _Star_Saturation: 1
     - _Star_Sharness: 0
-    - _Stars_Enabled: 1
+    - _Stars_Enabled: 0
     - _SunAngularDiameter: 1
     - _SunFalloff: 10
     - _SunFalloffIntensity: 1

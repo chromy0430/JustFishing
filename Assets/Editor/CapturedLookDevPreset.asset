@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3aeab6e6df44d7648a4742dd2e60e65a, type: 3}
+  m_Name: CapturedLookDevPreset
+  m_EditorClassIdentifier: Assembly-CSharp-Editor::EditorLookDev.LookDevPreset
+  lightColor: {r: 1, g: 1, b: 1, a: 1}
+  lightRotation: {x: 50, y: -30, z: 0}
+  shadowStrength: 0.6
+  shadowType: 2
+  useBakedGI: 1
+  indirectIntensity: 1
+  reflectionIntensity: 1
+  enableFog: 0
+  fogColor: {r: 0, g: 0.7909456, b: 0.8490566, a: 1}
+  fogDensity: 0.01
+  tonemappingMode: 2
+  saturation: 15
+  contrast: 10
+  colorTemperature: 0
+  colorTint: 0
+  vignetteIntensity: 0.2
+  bloomIntensity: 0.5
+  bloomThreshold: 1

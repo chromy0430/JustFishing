@@ -11,10 +11,10 @@ Material:
   m_Shader: {fileID: 4800000, guid: 6e32dc928e1ddf448be492d0266a7cb2, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _ALPHATEST_ON
   m_InvalidKeywords:
   - _ADD_PRECOMPUTED_VELOCITY
-  - _ALPHATEST_ON
   - _ENABLE_FOG_ON_TRANSPARENT
   - _SURFACE_TYPE_TRANSPARENT
   m_LightmapFlags: 0
@@ -407,3 +407,4 @@ Material:
     - _UnlitColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _Vector0: {r: 0.12, g: 1.5, b: 0, a: 0}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
