@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Water
   - Shop
+  - PerfectZone
+  - GoodZone
   layers:
   - Default
   - TransparentFX
@@ -13,9 +15,9 @@ TagManager:
   - Ground
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Dock
+  - Shop
+  - TreeAndGrass
   - 
   - 
   - 

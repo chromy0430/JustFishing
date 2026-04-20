@@ -15,6 +15,7 @@ Material:
   - _ADVANCED_SHADING
   - _CAUSTICS
   - _DISTANCE_NORMALS
+  - _INTERSECTION_FOAM
   - _NORMALMAP
   - _REFRACTION
   - _SURFACE_FOAM_SINGLE
@@ -27,7 +28,6 @@ Material:
   - _ENABLEDIRECTIONALCAUSTICS_ON
   - _FOAM
   - _FOAMON_ON
-  - _INTERSECTIONSHARP_ON
   - _RECEIVEDYNAMICEFFECTSFOAM_ON
   - _RECEIVEDYNAMICEFFECTSHEIGHT_ON
   - _RECEIVEDYNAMICEFFECTSNORMAL_ON
@@ -210,13 +210,13 @@ Material:
     - _HorizonDistance: 7.7
     - _IntersectionClipping: 0.583
     - _IntersectionDistortion: 0.47
-    - _IntersectionFalloff: 1
-    - _IntersectionFoamOn: 0
-    - _IntersectionLength: 1.53
+    - _IntersectionFalloff: 0.492
+    - _IntersectionFoamOn: 1
+    - _IntersectionLength: 2.78
     - _IntersectionRippleDist: 64
     - _IntersectionRippleSpeed: 1
     - _IntersectionRippleStrength: 1
-    - _IntersectionSharp: 1
+    - _IntersectionSharp: 0
     - _IntersectionSize: 0.944
     - _IntersectionSource: 0
     - _IntersectionSpeed: -0.1
@@ -310,8 +310,8 @@ Material:
     - _VertexColorWaveFlattening: 0
     - _WaveDistance: 0.97
     - _WaveDistortion: 0.5
-    - _WaveFrequency: 2
-    - _WaveHeight: 1
+    - _WaveFrequency: 3
+    - _WaveHeight: 1.2
     - _WaveMaxLayers: 64
     - _WaveNormalStr: 3.9
     - _WaveSpeed: 0.7
@@ -323,7 +323,7 @@ Material:
     - _ZClip: 1
     - _ZWrite: 0
     m_Colors:
-    - _BaseColor: {r: 0.24074405, g: 0.37081575, b: 0.6603774, a: 1}
+    - _BaseColor: {r: 0.27058825, g: 0.972549, b: 0.90588236, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _DepthMapBounds: {r: -402.3, g: -459.43, b: 0.0012693577, a: 0}
     - _Direction: {r: 1, g: 1, b: 0, a: 0}
@@ -337,7 +337,7 @@ Material:
     - _IntersectionColor: {r: 1, g: 1, b: 1, a: 1}
     - _NormalTiling: {r: 0.12, g: 0.12, b: 0, a: 0}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ShallowColor: {r: 0.4537736, g: 0.6037736, b: 0.8037736, a: 1}
+    - _ShallowColor: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _WaterColor: {r: 0.21176466, g: 0.6745098, b: 1, a: 1}
     - _WaterShallowColor: {r: 0, g: 0.9394503, b: 1, a: 1}

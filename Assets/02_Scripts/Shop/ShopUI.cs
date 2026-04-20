@@ -1,20 +1,23 @@
-﻿using UnityEngine;
+﻿using System.Runtime.CompilerServices;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class ShopUI : MonoBehaviour
 {
-    [SerializeField] private GameObject shopPanel;
-    [SerializeField] private GameObject promptUI;
-    [SerializeField] private Button closeButton;
+    [SerializeField] private GameObject _shopPanel;
+    [SerializeField] private GameObject _promptUI;
+    [SerializeField] private Button _closeButton;
+    [SerializeField] private Canvas _shopCanvas;
 
     private bool _isOpen = false;
 
     private void Awake()
     {
-        shopPanel.SetActive(false);
-        promptUI.SetActive(false);
-        closeButton.onClick.AddListener(Close);
+        _shopCanvas.enabled = false;
+        _shopPanel.SetActive(false);
+        _promptUI.SetActive(false);
+        _closeButton.onClick.AddListener(Close);
     }
 
     private void Update()
@@ -26,19 +29,22 @@ public class ShopUI : MonoBehaviour
     public void Open()
     {
         _isOpen = true;
-        shopPanel?.SetActive(true);
-        promptUI?.SetActive(false);
+        
+        _shopPanel?.SetActive(true);
+        _promptUI?.SetActive(false);
     }
 
     public void Close()
     {
         _isOpen = false;
-        shopPanel.SetActive(false);
+        _shopCanvas.enabled = false;
+        _shopPanel.SetActive(false);
     }
 
     public void ShowPrompt(bool show)
     {
         if (_isOpen) return;
-        promptUI?.SetActive(show);
+        _shopCanvas.enabled = show;
+        _promptUI?.SetActive(show);
     }
 }

@@ -7,15 +7,18 @@ public class PlayerInputData : ScriptableObject
     [field: SerializeField] public bool IsRunning { get; private set; }
     [field: SerializeField] public bool JumpPressed { get; private set; }
     [field: SerializeField] public bool InteractPressed { get; private set; }
+    [field: SerializeField] public bool ModeTogglePressed { get; private set; }
 
     public void SetJumpPressed(bool pressed) => JumpPressed = pressed;
 
     public void SetMoveInput(Vector2 input) => MoveInput = input;
     public void SetRunning(bool running) => IsRunning = running;
     public void SetInteractPressed(bool pressed) => InteractPressed = pressed;
+    public void SetModeTogglePressed(bool enabled) => ModeTogglePressed = enabled;
 
     public void ConsumeJump() => JumpPressed = false;
     public void ConsumeInteract() => InteractPressed = false;
+    public void ConsumeModeToggle() => ModeTogglePressed = false;
 
     public void Reset()
     {
@@ -23,5 +26,6 @@ public class PlayerInputData : ScriptableObject
         IsRunning = false;
         JumpPressed = false;
         InteractPressed = false;
+        ModeTogglePressed = false;
     }
 }

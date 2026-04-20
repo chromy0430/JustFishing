@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 932eb3565cd53744a87aa3a3cb36098f, type: 3}
+  m_Name: FishingData
+  m_EditorClassIdentifier: Assembly-CSharp::FishingData
+  minCastRadius: 5
+  maxCastRadius: 12
+  castDuration: 1
+  arcHeight: 3
+  waitMinTime: 1
+  waitMaxTime: 5
+  biteDepth: 0.5
+  biteDuration: 0.5
+  biteTimeLimit: 3
+  captureGaugeStart: 0

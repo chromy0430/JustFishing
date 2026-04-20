@@ -1,0 +1,168 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &6415522285337719703
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7059028209908109308, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -6033721047141491117, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -378375612495791462, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+      propertyPath: m_Name
+      value: Island
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5950778248612981197}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 203130007274382038}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3452315224875286166}
+  m_SourcePrefab: {fileID: 100100000, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+--- !u!1 &6181729622760427206 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+  m_PrefabInstance: {fileID: 6415522285337719703}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5950778248612981197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6181729622760427206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 865137d949a09bc49b258db75b98020b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WaterZoneController
+  island: {fileID: 6810070433775572092}
+  waterRenderer: {fileID: 0}
+  followTarget: {fileID: 0}
+  zone1Distance: 100
+  zone2Distance: 200
+  zone3Distance: 300
+  zone1BaseColor: {r: 0.2704254, g: 0.9716981, b: 0.90325373, a: 1}
+  zone2BaseColor: {r: 0.14818443, g: 0.49511948, b: 0.6981132, a: 1}
+  zone3BaseColor: {r: 0.16981131, g: 0, b: 0, a: 1}
+  zone1ShallowColor: {r: 0.7843138, g: 0.7843138, b: 0.7843138, a: 1}
+  zone2ShallowColor: {r: 0.18039216, g: 0.33333334, b: 0.39607847, a: 1}
+  zone3ShallowColor: {r: 0.4716981, g: 0.24252403, b: 0.24252403, a: 1}
+--- !u!135 &203130007274382038
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6181729622760427206}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 6
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3452315224875286166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6181729622760427206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9d1d22988bc694429982c9c2a3d3110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ReturnIslandTrigger
+  returnUI: {fileID: 0}
+--- !u!4 &6810070433775572092 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: b5ad28e1029951f428dc07ba0de425ff, type: 3}
+  m_PrefabInstance: {fileID: 6415522285337719703}
+  m_PrefabAsset: {fileID: 0}

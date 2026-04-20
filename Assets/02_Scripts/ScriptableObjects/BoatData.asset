@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04e87edbbf6c711498f3c53618bcc50c, type: 3}
+  m_Name: BoatData
+  m_EditorClassIdentifier: Assembly-CSharp::BoatData
+  boatPrefab: {fileID: 2456599717161570601, guid: f10135c2993c5cc4fbaa3b1d578f0ede, type: 3}
+  moveSpeed: 5
+  rotateSpeed: 60
