@@ -184,6 +184,7 @@ Material:
     - _FoamBubblesSpread: 0
     - _FoamBubblesStrength: 0
     - _FoamClipping: 0.242
+    - _FoamClippingDynamic: 0
     - _FoamDistanceOn: 0
     - _FoamDistortion: 0.03
     - _FoamOn: 1
@@ -238,6 +239,7 @@ Material:
     - _PlanarReflectionsParams: 0
     - _PointSpotLightReflectionDistortion: 0.5
     - _PointSpotLightReflectionExp: 64
+    - _PointSpotLightReflectionSharp: 0
     - _PointSpotLightReflectionSize: 0
     - _PointSpotLightReflectionStrength: 10
     - _QueueOffset: 0
@@ -282,6 +284,7 @@ Material:
     - _SrcBlend: 1
     - _SunReflectionDistortion: 0.228
     - _SunReflectionPerturbance: 0.386
+    - _SunReflectionSharp: 0
     - _SunReflectionSize: 1
     - _SunReflectionStrength: 0.68
     - _Surface: 0
@@ -295,6 +298,7 @@ Material:
     - _TranslucencyReflectionMask: 0
     - _TranslucencyStrength: 1
     - _TranslucencyStrengthDirect: 0.05
+    - _UnderwaterReflectionStrength: 0.5
     - _UnderwaterRefractionOffset: 0.2
     - _UnderwaterSurfaceSmoothness: 0.8
     - _VertexColorFoam: 0
@@ -314,7 +318,7 @@ Material:
     - _ZClip: 1
     - _ZWrite: 0
     m_Colors:
-    - _BaseColor: {r: 2.9960785, g: 0.45490196, b: 0, a: 0.9647059}
+    - _BaseColor: {r: 0.16981131, g: 0, b: 0, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _DepthMapBounds: {r: -402.3, g: -459.43, b: 0.0012693577, a: 0}
     - _Direction: {r: 1, g: 1, b: 0, a: 0}
@@ -328,7 +332,7 @@ Material:
     - _IntersectionColor: {r: 0, g: 0, b: 0, a: 0.8}
     - _NormalTiling: {r: 0.080000006, g: 0.080000006, b: 0, a: 0}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ShallowColor: {r: 0, g: 0, b: 0, a: 1}
+    - _ShallowColor: {r: 0.4716981, g: 0.24252403, b: 0.24252403, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _WaterColor: {r: 0.21176466, g: 0.6745098, b: 1, a: 1}
     - _WaterShallowColor: {r: 0, g: 0.9394503, b: 1, a: 1}

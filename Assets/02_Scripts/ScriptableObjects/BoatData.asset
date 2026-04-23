@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: BoatData
   m_EditorClassIdentifier: Assembly-CSharp::BoatData
   boatPrefab: {fileID: 2456599717161570601, guid: f10135c2993c5cc4fbaa3b1d578f0ede, type: 3}
-  moveSpeed: 5
+  moveSpeed: 20
   rotateSpeed: 60

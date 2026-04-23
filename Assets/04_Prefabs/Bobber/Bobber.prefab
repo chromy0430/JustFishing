@@ -14,8 +14,7 @@ GameObject:
   - component: {fileID: 1534968345122980564}
   - component: {fileID: 9013232361568627670}
   - component: {fileID: -4234072247378059227}
-  - component: {fileID: 8291127488882783812}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bobber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +108,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -122,7 +121,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3911995816437910382}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 95144392e6eede14cafa2d339e5c1ee9, type: 3}
   m_Name: 
@@ -155,33 +154,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56803477017c4ed4683c4e8f1a7816fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FishingBobber
-  waterLayer:
-    serializedVersion: 2
-    m_Bits: 16
---- !u!54 &8291127488882783812
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3911995816437910382}
-  serializedVersion: 5
-  m_Mass: 0.1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
+  _splashVFX: {fileID: 6461872937627779374, guid: f0a8d7609e0344f4ea8a18845131726a, type: 3}
+  _impactVFX: {fileID: 8128736399495611145, guid: 93ce78294d3aecf4d947a20999898482, type: 3}

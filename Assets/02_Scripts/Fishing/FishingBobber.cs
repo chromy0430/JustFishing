@@ -6,17 +6,16 @@ using StylizedWater3;
 [RequireComponent(typeof(Collider))]
 public class FishingBobber : MonoBehaviour
 {
-    [SerializeField] private LayerMask waterLayer;
+    [SerializeField] private ParticleSystem _splashVFX;
+    [SerializeField] private ParticleSystem _impactVFX;
 
     private Coroutine _currentRoutine;
     private AlignToWater _alignToWater;
     private Action _onLandedCallback;
     private bool _hasLanded = false;
-    private Rigidbody _rb;
 
     private void Awake()
     {
-        _rb = GetComponent<Rigidbody>();
         _alignToWater = GetComponent<AlignToWater>();
 
         if (_alignToWater != null) _alignToWater.enabled = false;
@@ -28,7 +27,6 @@ public class FishingBobber : MonoBehaviour
         _hasLanded = false;
         _onLandedCallback = onLanded;
 
-        if (_rb != null) _rb.isKinematic = true;
         if (_alignToWater != null) _alignToWater.enabled = false;
 
         gameObject.SetActive(true);
@@ -36,7 +34,6 @@ public class FishingBobber : MonoBehaviour
         _currentRoutine = StartCoroutine(CastRoutine(from, to, data, onLanded));
     }
 
-    // onLanded는 OnTriggerEnter에서 처리하므로 콜백 제거
     public void StartWaiting(FishingData data, Action onBite)
     {
         if (_currentRoutine != null) StopCoroutine(_currentRoutine);
@@ -71,8 +68,9 @@ public class FishingBobber : MonoBehaviour
 
         transform.position = to;
 
-        if (_rb != null) _rb.isKinematic = false;
         if (_alignToWater != null) _alignToWater.enabled = true;
+        //Instantiate(_splashVFX, this.transform.position, Quaternion.identity);
+        //Instantiate(_impactVFX, this.transform.position, Quaternion.identity);
 
         onLanded?.Invoke();
     }

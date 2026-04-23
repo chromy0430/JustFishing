@@ -96,6 +96,7 @@ MonoBehaviour:
     amplitudeByLength: 0
     minMaxSteepness: {x: 0.1, y: 1}
     steepnessByLength: 0
+    directionBase: 0
     directionAngleVariation: 180
   layers:
   - enabled: 1
@@ -138,7 +139,7 @@ Texture2D:
     serializedVersion: 2
     Hash: 00000000000000000000000000000000
   m_IsAlphaChannelOptional: 0
-  serializedVersion: 3
+  serializedVersion: 4
   m_Width: 4
   m_Height: 2
   m_CompleteImageSize: 64
@@ -167,7 +168,7 @@ Texture2D:
   m_ColorSpace: 0
   m_PlatformBlob: 
   image data: 64
-  _typelessdata: f42e2c49fa38003cc92f9a47c844003c2330634857410000a62e7c4cd7bc0000adcd93d100000038000000000000003800000000000000380000000000002736
+  _typelessdata: f42e734ffa38003cc92f9a47c844003c2330634857410000a62e7c4cd7bc0000adcd93d100000038000000000000003800000000000000380000000000002736
   m_StreamData:
     serializedVersion: 2
     offset: 0

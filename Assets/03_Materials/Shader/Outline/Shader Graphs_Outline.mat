@@ -37,8 +37,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _OutlineThickness: 0.55
+    - _OutlineThickness: 0.5
     m_Colors:
-    - _OutlineColor: {r: 0.16078421, g: 0.09803913, b: 0.09803913, a: 0.3137255}
+    - _OutlineColor: {r: 0.31132078, g: 0.2569865, b: 0.2569865, a: 0.15686275}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
