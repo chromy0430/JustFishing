@@ -16,7 +16,7 @@ public class BoatSpawner : MonoBehaviour
         if (player == null) { Debug.LogError("Player 없음"); return; }
 
         player.transform.SetParent(boat.transform);
-        player.transform.localPosition = new Vector3(0f, 1f, 0f);
+        player.transform.localPosition = new Vector3(0f, 2f, 0f);
 
         if (player.TryGetComponent<CharacterController>(out var cc)) cc.enabled = false;
         if (player.TryGetComponent<PlayerMove>(out var pm)) pm.enabled = false;

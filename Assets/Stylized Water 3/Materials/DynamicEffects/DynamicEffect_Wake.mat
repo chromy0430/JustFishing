@@ -38,6 +38,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _BlendOp: 0
+    - _Cull: 0
     - _FoamStrength: 1
     - _Height: 1
     - _HeightScale: 1

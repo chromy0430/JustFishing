@@ -69,8 +69,8 @@ public class FishingBobber : MonoBehaviour
         transform.position = to;
 
         if (_alignToWater != null) _alignToWater.enabled = true;
-        //Instantiate(_splashVFX, this.transform.position, Quaternion.identity);
-        //Instantiate(_impactVFX, this.transform.position, Quaternion.identity);
+        Instantiate(_splashVFX, this.transform.position, Quaternion.identity);
+        Instantiate(_impactVFX, this.transform.position, Quaternion.identity);
 
         onLanded?.Invoke();
     }

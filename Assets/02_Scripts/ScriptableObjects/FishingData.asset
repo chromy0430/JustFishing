@@ -16,8 +16,8 @@ MonoBehaviour:
   maxCastRadius: 12
   castDuration: 1
   arcHeight: 3
-  waitMinTime: 10
-  waitMaxTime: 20
+  waitMinTime: 3
+  waitMaxTime: 5
   biteDepth: 0.5
   biteDuration: 0.5
   biteTimeLimit: 3
