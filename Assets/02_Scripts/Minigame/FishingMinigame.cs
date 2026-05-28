@@ -23,6 +23,9 @@ public class FishingMinigame : MonoBehaviour
     [Header("Data")]
     [SerializeField] private PlayerInputData inputData;
 
+    [Header("Pulse")]
+    [SerializeField] private CenterZonePulse centerZonePulse; // Inspector 연결
+    
     private static readonly Vector2[] SpawnDirections = new Vector2[]
     {
         new Vector2(   0f,  300f),
@@ -157,6 +160,9 @@ public class FishingMinigame : MonoBehaviour
             _ => 0f
         };
 
+        if (judgement != NoteJudgement.Miss)
+            centerZonePulse?.Pulse(judgement);
+        
         ShowJudgement(judgement, gaugeChange);
 
         // 게이지는 물고기 체력 기준으로 환산
@@ -224,6 +230,8 @@ public class FishingMinigame : MonoBehaviour
             if (note != null) Destroy(note.gameObject);
         _activeNotes.Clear();
 
+        centerZonePulse?.ClearImpacts();
+        
         minigamePanel.SetActive(false);
         _onResult?.Invoke(success);
     }
