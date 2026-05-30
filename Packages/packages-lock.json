@@ -1,11 +1,5 @@
 {
   "dependencies": {
-    "com.distantlands.cozy.core": {
-      "version": "file:com.distantlands.cozy.core",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "com.occasoftware.super-simple-skybox": {
       "version": "file:com.occasoftware.super-simple-skybox",
       "depth": 0,
@@ -164,16 +158,6 @@
       "depth": 1,
       "source": "registry",
       "dependencies": {},
-      "url": "https://packages.unity.com"
-    },
-    "com.unity.polybrush": {
-      "version": "1.2.1",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.modules.imgui": "1.0.0",
-        "com.unity.settings-manager": "2.0.1"
-      },
       "url": "https://packages.unity.com"
     },
     "com.unity.probuilder": {

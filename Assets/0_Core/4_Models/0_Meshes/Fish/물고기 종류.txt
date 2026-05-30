@@ -1,0 +1,24 @@
+1번째 지역 물고기
+Mandarin_fish_01 (쏘가리)
+crucian_carp_01 (붕어)
+Pale_chub_01 (피라미)
+catfish_01 (메기)
+Northern_snakehead_01 (가물치)
+
+2번째 지역 물고기
+Common_Carp_01 (잉어)
+Channel_Catfish_01 (메기)
+Muskellunge_01 (강늉치고기)
+Yellow_Perch_01 (노란색가시돔)
+Rainbow_Trout_01 (무지개송어)
+
+3번째 지역 물고기
+Lionfish_01 (쏠배감펭)
+flounder_01 (광어)
+King_Gold_Carp_01 (황금잉어)
+
+
+
+
+
+

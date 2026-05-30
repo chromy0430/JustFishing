@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90c8e2a215aea2046a1de7a3abd10d71, type: 3}
+  m_Name: FishZoneData
+  m_EditorClassIdentifier: Assembly-CSharp::FishZoneData
+  zone1FishPrefabs:
+  - {fileID: 7969974192758648551, guid: 62940b15d6b9e5c47ae3069aea455793, type: 3}
+  - {fileID: 2389395117279506709, guid: 231475d46e5117e4e961d9ef9ebb81c9, type: 3}
+  - {fileID: 7940447190375895385, guid: 337aaf1f557276d458894762052eb27f, type: 3}
+  - {fileID: 2893364601022404374, guid: 3e233c03172edc0459fd35cd4a8d3f57, type: 3}
+  - {fileID: 7766085013866591413, guid: bcd66a582e3096c48b7a63d0fb7f4164, type: 3}
+  zone2FishPrefabs: []
+  zone3FishPrefabs: []
