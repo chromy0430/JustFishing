@@ -80,18 +80,23 @@ public class FishingBobber : MonoBehaviour
         float waitTime = UnityEngine.Random.Range(data.waitMinTime, data.waitMaxTime);
         yield return new WaitForSeconds(waitTime);
 
-        // 입질 시 AlignToWater 비활성 후 찌 내려가는 연출
-        if (_alignToWater != null)
-            _alignToWater.enabled = false;
-
-        yield return StartCoroutine(BiteRoutine(data));
+        // 콜백 먼저 호출 (물고기 접근 연출 시작)
         onBite?.Invoke();
+
+        // BiteRoutine은 FishingController에서 직접 호출하도록 변경
+    }
+    
+    public void PlayBiteAnimation(FishingData data, Action onComplete)
+    {
+        StartCoroutine(BiteRoutine(data, onComplete));
     }
 
-    private IEnumerator BiteRoutine(FishingData data)
+    private IEnumerator BiteRoutine(FishingData data, Action onComplete = null)
     {
+        if (_alignToWater != null) _alignToWater.enabled = false;
+
         Vector3 startPos = transform.position;
-        Vector3 endPos = startPos - new Vector3(0f, data.biteDepth, 0f);
+        Vector3 endPos   = startPos - new Vector3(0f, data.biteDepth, 0f);
 
         float elapsed = 0f;
         while (elapsed < data.biteDuration)
@@ -101,6 +106,8 @@ public class FishingBobber : MonoBehaviour
             transform.position = Vector3.Lerp(startPos, endPos, t);
             yield return null;
         }
+
+        onComplete?.Invoke();
     }
 
 }

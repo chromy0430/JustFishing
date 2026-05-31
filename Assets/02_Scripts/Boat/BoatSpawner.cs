@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Unity.Cinemachine;
 
 // Ocean 씬의 빈 오브젝트에 부착
 public class BoatSpawner : MonoBehaviour
@@ -16,13 +15,19 @@ public class BoatSpawner : MonoBehaviour
         if (player == null) { Debug.LogError("Player 없음"); return; }
 
         player.transform.SetParent(boat.transform);
-        player.transform.localPosition = new Vector3(0f, 2f, 0f);
+        player.transform.localPosition = new Vector3(0f, 1f, 0f);
+        player.transform.localRotation = Quaternion.identity;
 
         if (player.TryGetComponent<CharacterController>(out var cc)) cc.enabled = false;
         if (player.TryGetComponent<PlayerMove>(out var pm)) pm.enabled = false;
 
         BoatController boatCtrl = boat.GetComponent<BoatController>();
         boatCtrl?.Init(player.transform);
+
+        // PlayerAnimator 찾기 (자식 오브젝트인 YellowHuman_01에 있음)
+        PlayerAnimator playerAnim = player.GetComponentInChildren<PlayerAnimator>();
+        if (playerAnim != null)
+            playerAnim.SetOnBoat(true);
 
         // CameraStabilizer + Cinemachine 연결
         CameraStabilizer stabilizer = FindFirstObjectByType<CameraStabilizer>();
@@ -32,14 +37,15 @@ public class BoatSpawner : MonoBehaviour
         if (vcam != null && stabilizer != null)
             vcam.Target.TrackingTarget = stabilizer.transform;
 
-        // FishingController 참조
+        // FishingController 참조 + 주입
         FishingController fishingCtrl = FindFirstObjectByType<FishingController>();
-
-        // FishingController에 카메라 주입
-        fishingCtrl?.SetCamera(Camera.main);
+        if (fishingCtrl != null)
+        {
+            fishingCtrl.SetCamera(Camera.main);
+            fishingCtrl.SetPlayerAnimator(playerAnim); // PlayerAnimator 주입
+        }
 
         // PlayerModeController에 보트 + 낚시 컨트롤러 주입
-        // Start가 안 불리므로 BoatSpawner에서 직접 전달
         if (player.TryGetComponent<PlayerModeController>(out var modeCtrl))
             modeCtrl.OnBoardBoat(boatCtrl, fishingCtrl);
     }

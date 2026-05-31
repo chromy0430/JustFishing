@@ -5,7 +5,10 @@ using UnityEngine;
 public class FishManager : MonoBehaviour
 {
     public static FishManager Instance { get; private set; }
-
+    
+    private HashSet<FishAgent> _overrideFish = new HashSet<FishAgent>();
+    public FishZoneData GetZoneData() => zoneData;
+    
     [Header("Data")]
     [SerializeField] private FishZoneData          zoneData;
     [SerializeField] private WaterZoneController   waterZone;
@@ -61,6 +64,7 @@ public class FishManager : MonoBehaviour
         {
             FishAgent agent = _agents[i];
             if (agent == null) continue;
+            if (_overrideFish.Contains(agent)) continue;
 
             Vector3 force = CalculateBoids(agent, changeWander);
 
@@ -99,6 +103,33 @@ public class FishManager : MonoBehaviour
             }
         }
     }
+    
+    // 가장 가까운 물고기 반환
+    public FishAgent GetNearestFish(Vector3 pos)
+    {
+        FishAgent nearest  = null;
+        float     minDist  = float.MaxValue;
+
+        foreach (FishAgent agent in _agents)
+        {
+            if (agent == null) continue;
+            float dist = Vector3.Distance(agent.transform.position, pos);
+            if (dist < minDist)
+            {
+                minDist = dist;
+                nearest = agent;
+            }
+        }
+        return nearest;
+    }
+
+// 특정 물고기 Boids 제어 on/off
+    public void SetFishOverride(FishAgent agent, bool value)
+    {
+        if (value) _overrideFish.Add(agent);
+        else        _overrideFish.Remove(agent);
+    }
+
 
     private Vector3 CalculateBoids(FishAgent agent, bool changeWander)
     {
@@ -196,8 +227,10 @@ public class FishManager : MonoBehaviour
     }
 
     // Zone 판별
-    private int GetCurrentZone()
+    public int GetCurrentZone()
     {
+        if (waterZone == null || playerTransform == null) return 1;
+
         float dist = Vector2.Distance(
             new Vector2(waterZone.island.position.x, waterZone.island.position.z),
             new Vector2(playerTransform.position.x,  playerTransform.position.z)
