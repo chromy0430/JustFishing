@@ -58,7 +58,7 @@ Material:
     - _AO: 1
     - _Blur: 0.15
     - _Frequency: 15
-    - _Intensity: 0.05
+    - _Intensity: 0.03
     - _Metal: 0.1
     - _Offset: 0
     - _QueueControl: 0

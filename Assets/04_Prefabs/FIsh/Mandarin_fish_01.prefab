@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mandarin_fish_01
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 17c07bc2bdc5b484c9236a6fc656de1b, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
