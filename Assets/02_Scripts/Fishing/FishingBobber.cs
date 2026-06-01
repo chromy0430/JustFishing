@@ -8,7 +8,9 @@ public class FishingBobber : MonoBehaviour
 {
     [SerializeField] private ParticleSystem _splashVFX;
     [SerializeField] private ParticleSystem _impactVFX;
-
+    [SerializeField] private ParticleSystem splashParticle;
+    
+    private Vector3 _surfacePosition;
     private Coroutine _currentRoutine;
     private AlignToWater _alignToWater;
     private Action _onLandedCallback;
@@ -19,6 +21,8 @@ public class FishingBobber : MonoBehaviour
         _alignToWater = GetComponent<AlignToWater>();
 
         if (_alignToWater != null) _alignToWater.enabled = false;
+        if (splashParticle != null) splashParticle.gameObject.SetActive(false);
+        
         Hide();
     }
 
@@ -71,6 +75,7 @@ public class FishingBobber : MonoBehaviour
         if (_alignToWater != null) _alignToWater.enabled = true;
         Instantiate(_splashVFX, this.transform.position, Quaternion.identity);
         Instantiate(_impactVFX, this.transform.position, Quaternion.identity);
+        AudioManager.Instance?.PlaySplash();
 
         onLanded?.Invoke();
     }
@@ -88,6 +93,7 @@ public class FishingBobber : MonoBehaviour
     
     public void PlayBiteAnimation(FishingData data, Action onComplete)
     {
+        _surfacePosition = transform.position;
         StartCoroutine(BiteRoutine(data, onComplete));
     }
 
@@ -99,15 +105,44 @@ public class FishingBobber : MonoBehaviour
         Vector3 endPos   = startPos - new Vector3(0f, data.biteDepth, 0f);
 
         float elapsed = 0f;
-        while (elapsed < data.biteDuration)
+        float duration = data.biteDuration * 0.3f;
+        
+        while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            float t = elapsed / data.biteDuration;
-            transform.position = Vector3.Lerp(startPos, endPos, t);
+            // EaseInQuart: 처음엔 느리다가 확 내려감
+            float t     = elapsed / duration;
+            float eased = t * t * t * t;
+            transform.position = Vector3.Lerp(startPos, endPos, eased);
             yield return null;
         }
 
+        transform.position = endPos;
         onComplete?.Invoke();
+    }
+    
+    public void PlaySplash()
+    {
+        if (splashParticle == null) return;
+        
+        
+        splashParticle.transform.SetParent(null);
+        splashParticle.transform.position = _surfacePosition;
+        splashParticle.transform.localScale = Vector3.one * 2f;
+        
+        splashParticle.gameObject.SetActive(true);
+        splashParticle.Stop();
+        splashParticle.Play();
+    }
+
+    public void StopSplash()
+    {
+        if (splashParticle == null) return;
+        splashParticle.Stop();
+        splashParticle.gameObject.SetActive(false);
+        
+        splashParticle.transform.SetParent(transform);
+        splashParticle.transform.localPosition = Vector3.zero;
     }
 
 }

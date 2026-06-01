@@ -35,4 +35,14 @@ public class ShopTrigger : MonoBehaviour
         shopUI.ShowPrompt(false);
         shopUI.Close();
     }
+    
+    private void OnPurchase()
+    {
+        AudioManager.Instance?.PlayPurchase();
+    }
+    
+    private void OnEnhance()
+    {
+        AudioManager.Instance?.PlayEnhance();
+    }
 }

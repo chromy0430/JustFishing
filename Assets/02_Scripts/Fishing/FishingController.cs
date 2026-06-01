@@ -182,12 +182,11 @@ public class FishingController : MonoBehaviour
 
         if (_approachingFish != null)
         {
-            float   duration  = Vector3.Distance(
-                _approachingFish.transform.position,
-                _bobber.transform.position) / fishApproachSpeed;
-
             Vector3 startPos  = _approachingFish.transform.position;
             Vector3 targetPos = _bobber.transform.position;
+
+            float distance = Vector3.Distance(startPos, targetPos);
+            float duration = distance / fishApproachSpeed;
 
             FishManager.Instance?.SetFishOverride(_approachingFish, true);
 
@@ -197,9 +196,14 @@ public class FishingController : MonoBehaviour
                 elapsed += Time.deltaTime;
                 if (_approachingFish == null) break;
 
-                float   t   = elapsed / duration;
-                _approachingFish.transform.position = Vector3.Lerp(startPos, targetPos, t);
+                float t = elapsed / duration;
 
+                // EaseInCubic: 처음엔 느리다가 끝에 가속
+                float eased = t * t * t;
+
+                _approachingFish.transform.position = Vector3.Lerp(startPos, targetPos, eased);
+
+                // 찌 방향으로 회전
                 Vector3 dir = targetPos - _approachingFish.transform.position;
                 dir.y = 0f;
                 if (dir.magnitude > 0.1f)
@@ -207,11 +211,15 @@ public class FishingController : MonoBehaviour
 
                 yield return null;
             }
+            
+            if (_approachingFish != null)
+                _approachingFish.gameObject.SetActive(false);
         }
 
         // 물고기 접근 완료 후 찌 내려가는 연출
         _bobber.PlayBiteAnimation(fishingData, () =>
         {
+            _bobber.PlaySplash();
             // 찌 내려간 후 실제 Bite 상태로 전환
             OnBite();
         });
@@ -246,6 +254,7 @@ public class FishingController : MonoBehaviour
     private void OnMinigameResult(bool success)
     {
         playerAnimator?.SetBiting(false);
+        _bobber.StopSplash();
 
         if (success && _approachingFish != null)
         {
@@ -254,14 +263,15 @@ public class FishingController : MonoBehaviour
             Destroy(_approachingFish.gameObject);
             _approachingFish = null;
         }
-        else
+        else if (!success && _approachingFish != null)
         {
-            // 실패 시 물고기 Boids로 복귀
+            // 실패 → 물고기 다시 활성화 후 Boids 복귀
+            _approachingFish.gameObject.SetActive(true);
             ReleaseApproachingFish();
         }
 
         Debug.Log(success ? "낚시 성공!" : "낚시 실패!");
-
+        
         // 낚시 모드 유지 → 다시 조준 상태로
         Invoke(nameof(ReturnToAiming), 1.5f);
     }

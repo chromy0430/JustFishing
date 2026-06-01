@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f265eff58e6e174418390bac0c4e5cb3, type: 3}
+  m_Name: AudioData
+  m_EditorClassIdentifier: Assembly-CSharp::AudioData
+  bgmLobby: {fileID: 8300000, guid: b0600c233d3d2854cb2f77b6bd1f6a22, type: 3}
+  bgmOcean01: {fileID: 8300000, guid: 9bc1e1f892c85a94bb6607acf6754115, type: 3}
+  bgmOcean02: {fileID: 8300000, guid: 0cbcf5b2f14714548a1f02b442737c8f, type: 3}
+  sfxEnhance: {fileID: 8300000, guid: 8ed2261fd0a7c5444a954fb2d058b228, type: 3}
+  sfxPurchase: {fileID: 8300000, guid: 1e9fad67cf85edd4ab2017ea7106eab9, type: 3}
+  sfxShipMoving: {fileID: 8300000, guid: 8c79f3c457857f5459af28b6d6bfc7b2, type: 3}
+  sfxSplash: {fileID: 8300000, guid: ae969fc90b98c924ca1f29449c300ce2, type: 3}
+  bgmVolume: 0.5
+  sfxVolume: 1

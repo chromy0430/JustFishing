@@ -43,6 +43,13 @@ public class PlayerModeController : MonoBehaviour
         if (CurrentMode == PlayerMode.Fish)
         {
             _boatController.enabled = false;
+            
+            if (_boatController.TryGetComponent<Rigidbody>(out var rb))
+            {
+                rb.linearVelocity  = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+            }
+            
             _fishingController?.EnterFishingMode();
         }
         else
