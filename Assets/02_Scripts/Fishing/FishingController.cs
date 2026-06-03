@@ -157,6 +157,7 @@ public class FishingController : MonoBehaviour
 
             playerAnimator?.SetBiting(true);
             SetState(FishingState.Minigame);
+            _bobber.PlaySplash();
             minigame.StartMinigame(fishingData, _currentFishData, OnMinigameResult);
         }
     }
@@ -219,7 +220,6 @@ public class FishingController : MonoBehaviour
         // 물고기 접근 완료 후 찌 내려가는 연출
         _bobber.PlayBiteAnimation(fishingData, () =>
         {
-            _bobber.PlaySplash();
             // 찌 내려간 후 실제 Bite 상태로 전환
             OnBite();
         });
@@ -249,6 +249,8 @@ public class FishingController : MonoBehaviour
         SetState(FishingState.Aiming);
         playerAnimator?.ExitFishingMode();
         _indicator.gameObject.SetActive(true);
+        _bobber.StopSplash();
+
     }
 
     private void OnMinigameResult(bool success)

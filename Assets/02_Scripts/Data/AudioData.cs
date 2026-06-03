@@ -1,8 +1,14 @@
 using UnityEngine;
+using UnityEngine.Audio;
 
 [CreateAssetMenu(fileName = "AudioData", menuName = "JustFishing/Audio Data")]
 public class AudioData : ScriptableObject
 {
+    [Header("Audio Mixer")]
+    public AudioMixer     audioMixer;         // GameAudioMixer 연결
+    public AudioMixerGroup bgmMixerGroup;     // BGM 그룹
+    public AudioMixerGroup sfxMixerGroup;     // SFX 그룹
+    
     [Header("BGM")]
     public AudioClip bgmLobby;
     public AudioClip bgmOcean01;

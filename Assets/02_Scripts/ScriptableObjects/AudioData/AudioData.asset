@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f265eff58e6e174418390bac0c4e5cb3, type: 3}
   m_Name: AudioData
   m_EditorClassIdentifier: Assembly-CSharp::AudioData
+  audioMixer: {fileID: 24100000, guid: ea54859f1590ef845bb6aad032638723, type: 2}
+  bgmMixerGroup: {fileID: -336378062764548061, guid: ea54859f1590ef845bb6aad032638723, type: 2}
+  sfxMixerGroup: {fileID: 3413365670145994578, guid: ea54859f1590ef845bb6aad032638723, type: 2}
   bgmLobby: {fileID: 8300000, guid: b0600c233d3d2854cb2f77b6bd1f6a22, type: 3}
   bgmOcean01: {fileID: 8300000, guid: 9bc1e1f892c85a94bb6607acf6754115, type: 3}
   bgmOcean02: {fileID: 8300000, guid: 0cbcf5b2f14714548a1f02b442737c8f, type: 3}

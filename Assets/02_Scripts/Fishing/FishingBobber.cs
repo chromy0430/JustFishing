@@ -69,13 +69,14 @@ public class FishingBobber : MonoBehaviour
 
             yield return null;
         }
+        
+        AudioManager.Instance?.PlaySplash();
 
         transform.position = to;
-
+        
         if (_alignToWater != null) _alignToWater.enabled = true;
         Instantiate(_splashVFX, this.transform.position, Quaternion.identity);
         Instantiate(_impactVFX, this.transform.position, Quaternion.identity);
-        AudioManager.Instance?.PlaySplash();
 
         onLanded?.Invoke();
     }

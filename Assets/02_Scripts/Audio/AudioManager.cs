@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
@@ -10,26 +11,22 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioData audioData;
 
     [Header("BGM")]
-    [SerializeField] private float crossFadeDuration = 1.5f; // 크로스페이드 시간
+    [SerializeField] private float crossFadeDuration = 1.5f;
 
     [Header("SFX Pool")]
-    [SerializeField] private int sfxPoolSize = 8; // 동시 재생 가능한 SFX 수
+    [SerializeField] private int sfxPoolSize = 8;
 
-    // BGM용 AudioSource 2개 (크로스페이드)
     private AudioSource _bgmSourceA;
     private AudioSource _bgmSourceB;
     private bool        _isAActive = true;
 
-    // SFX 풀
-    private List<AudioSource> _sfxPool = new List<AudioSource>();
+    private List<AudioSource> _sfxPool       = new List<AudioSource>();
+    private AudioSource       _shipMovingSource;
+    private bool              _isShipMoving  = false;
 
-    // 현재 재생 중인 BGM 코루틴
     private Coroutine _bgmRoutine;
     private Coroutine _crossFadeRoutine;
-
-    // ShipMoving SFX는 루프 재생이므로 별도 관리
-    private AudioSource _shipMovingSource;
-    private bool        _isShipMoving = false;
+    private Coroutine _shipFadeRoutine;
 
     private void Awake()
     {
@@ -38,7 +35,18 @@ public class AudioManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         InitAudioSources();
+
+        // 볼륨 초기값 적용
+        SetBGMVolume(audioData.bgmVolume);
+        SetSFXVolume(audioData.sfxVolume);
+
         SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void Start()
+    {
+        // 첫 씬 BGM 시작 (Awake 이후 확실히 실행)
+        PlayBGMForCurrentScene();
     }
 
     private void OnDestroy()
@@ -48,44 +56,54 @@ public class AudioManager : MonoBehaviour
 
     private void InitAudioSources()
     {
-        // BGM AudioSource 2개 생성
-        _bgmSourceA = CreateAudioSource("BGM_A", true, audioData.bgmVolume);
-        _bgmSourceB = CreateAudioSource("BGM_B", true, audioData.bgmVolume);
+        // BGM AudioSource 2개
+        _bgmSourceA = CreateAudioSource("BGM_A", true,  audioData.bgmMixerGroup);
+        _bgmSourceB = CreateAudioSource("BGM_B", true,  audioData.bgmMixerGroup);
         _bgmSourceB.volume = 0f;
 
-        // ShipMoving 전용 AudioSource
-        _shipMovingSource = CreateAudioSource("SFX_ShipMoving", true, 0f);
+        // ShipMoving 전용
+        _shipMovingSource      = CreateAudioSource("SFX_ShipMoving", true, audioData.sfxMixerGroup);
         _shipMovingSource.clip = audioData.sfxShipMoving;
+        _shipMovingSource.volume = 0f;
 
-        // SFX 풀 생성
+        // SFX 풀
         for (int i = 0; i < sfxPoolSize; i++)
         {
-            AudioSource src = CreateAudioSource($"SFX_Pool_{i}", false, audioData.sfxVolume);
+            AudioSource src = CreateAudioSource($"SFX_Pool_{i}", false, audioData.sfxMixerGroup);
             _sfxPool.Add(src);
         }
     }
 
-    private AudioSource CreateAudioSource(string name, bool loop, float volume)
+    private AudioSource CreateAudioSource(string name, bool loop, AudioMixerGroup mixerGroup)
     {
-        GameObject obj = new GameObject(name);
+        GameObject obj        = new GameObject(name);
         obj.transform.SetParent(transform);
 
-        AudioSource src = obj.AddComponent<AudioSource>();
-        src.loop        = loop;
-        src.volume      = volume;
-        src.playOnAwake = false;
+        AudioSource src       = obj.AddComponent<AudioSource>();
+        src.loop              = loop;
+        src.playOnAwake       = false;
+        src.outputAudioMixerGroup = mixerGroup;
 
         return src;
     }
 
-    // 씬 로드 시 BGM 자동 전환
+    // ==================== 씬 전환 ====================
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        switch (scene.name)
+        PlayBGMForCurrentScene();
+
+        // 씬 전환 시 ShipMoving 즉시 정지
+        ForceStopShipMoving();
+    }
+
+    private void PlayBGMForCurrentScene()
+    {
+        string sceneName = SceneManager.GetActiveScene().name;
+        switch (sceneName)
         {
-            case "Island":
+            case "MainScene":
                 PlayBGM_Lobby();
-                StopShipMoving();
                 break;
             case "Ocean":
                 PlayBGM_Ocean();
@@ -107,7 +125,6 @@ public class AudioManager : MonoBehaviour
         _bgmRoutine = StartCoroutine(OceanBGMRoutine());
     }
 
-    // Ocean BGM 01, 02 번갈아 재생
     private IEnumerator OceanBGMRoutine()
     {
         bool playFirst = true;
@@ -115,8 +132,6 @@ public class AudioManager : MonoBehaviour
         {
             AudioClip clip = playFirst ? audioData.bgmOcean01 : audioData.bgmOcean02;
             CrossFadeBGM(clip);
-
-            // 현재 클립 재생 시간만큼 대기 후 다음 클립으로
             yield return new WaitForSeconds(clip.length - crossFadeDuration);
             playFirst = !playFirst;
         }
@@ -142,79 +157,93 @@ public class AudioManager : MonoBehaviour
 
         while (elapsed < crossFadeDuration)
         {
-            elapsed += Time.deltaTime;
-            float t  = elapsed / crossFadeDuration;
-
+            elapsed       += Time.deltaTime;
+            float t        = elapsed / crossFadeDuration;
             fadeOut.volume = Mathf.Lerp(startVolume, 0f, t);
-            fadeIn.volume  = Mathf.Lerp(0f, audioData.bgmVolume, t);
-
+            fadeIn.volume  = Mathf.Lerp(0f, 1f, t); // Mixer가 볼륨 담당
             yield return null;
         }
 
         fadeOut.Stop();
         fadeOut.volume = 0f;
-        fadeIn.volume  = audioData.bgmVolume;
-
-        _isAActive = !_isAActive;
+        fadeIn.volume  = 1f;
+        _isAActive     = !_isAActive;
     }
 
     // ==================== SFX ====================
 
-    public void PlaySFX(AudioClip clip)
+    public void PlaySFX(AudioClip clip, bool allowOverlap = false)
     {
         if (clip == null) return;
 
-        // 같은 클립이 이미 재생 중이면 중복 재생 방지
-        foreach (AudioSource src in _sfxPool)
+        // 중복 재생 방지 (allowOverlap = false일 때)
+        if (!allowOverlap)
         {
-            if (src.isPlaying && src.clip == clip) return;
+            foreach (AudioSource src in _sfxPool)
+                if (src.isPlaying && src.clip == clip) return;
         }
 
-        // 풀에서 비어있는 AudioSource 찾기
         AudioSource available = GetAvailableSFXSource();
         if (available == null) return;
 
         available.clip   = clip;
-        available.volume = audioData.sfxVolume;
+        available.volume = 1f; // Mixer가 볼륨 담당
         available.Play();
     }
 
     private AudioSource GetAvailableSFXSource()
     {
-        // 재생 중이지 않은 Source 찾기
         foreach (AudioSource src in _sfxPool)
             if (!src.isPlaying) return src;
-
-        // 모두 재생 중이면 null 반환 (무시)
         return null;
     }
 
-    // ==================== 개별 SFX 메서드 ====================
+    // ==================== 개별 SFX ====================
 
     public void PlayEnhance()  => PlaySFX(audioData.sfxEnhance);
     public void PlayPurchase() => PlaySFX(audioData.sfxPurchase);
-    public void PlaySplash()   => PlaySFX(audioData.sfxSplash);
 
-    // ShipMoving은 루프 재생 + 페이드 처리
+    // 찌 착수 - 딜레이 없이 즉시 재생
+    public void PlaySplash()   => PlaySFX(audioData.sfxSplash, allowOverlap: true);
+
+    // ==================== ShipMoving ====================
+
     public void StartShipMoving()
     {
         if (_isShipMoving) return;
         _isShipMoving = true;
-        StartCoroutine(FadeShipMoving(0f, audioData.sfxVolume, 0.5f));
+
+        if (_shipFadeRoutine != null) StopCoroutine(_shipFadeRoutine);
+
+        if (!_shipMovingSource.isPlaying)
+            _shipMovingSource.Play();
+
+        _shipFadeRoutine = StartCoroutine(FadeShipMoving(
+            _shipMovingSource.volume, 1f, 0.3f)); // 0.5 → 0.3으로 단축
     }
 
     public void StopShipMoving()
     {
         if (!_isShipMoving) return;
         _isShipMoving = false;
-        StartCoroutine(FadeShipMoving(_shipMovingSource.volume, 0f, 0.5f, stopOnComplete: true));
+
+        if (_shipFadeRoutine != null) StopCoroutine(_shipFadeRoutine);
+        _shipFadeRoutine = StartCoroutine(FadeShipMoving(
+            _shipMovingSource.volume, 0f, 0.3f, stopOnComplete: true));
     }
 
-    private IEnumerator FadeShipMoving(float from, float to, float duration, bool stopOnComplete = false)
+    // 씬 전환 또는 모드 전환 시 즉시 정지
+    public void ForceStopShipMoving()
     {
-        if (!_shipMovingSource.isPlaying && to > 0f)
-            _shipMovingSource.Play();
+        _isShipMoving = false;
+        if (_shipFadeRoutine != null) StopCoroutine(_shipFadeRoutine);
+        _shipMovingSource.volume = 0f;
+        _shipMovingSource.Stop();
+    }
 
+    private IEnumerator FadeShipMoving(float from, float to,
+        float duration, bool stopOnComplete = false)
+    {
         float elapsed = 0f;
         while (elapsed < duration)
         {
@@ -224,24 +253,28 @@ public class AudioManager : MonoBehaviour
         }
 
         _shipMovingSource.volume = to;
-
-        if (stopOnComplete)
-            _shipMovingSource.Stop();
+        if (stopOnComplete) _shipMovingSource.Stop();
     }
 
-    // ==================== 볼륨 조절 ====================
+    // ==================== 볼륨 조절 (UI 연동용) ====================
 
+    // AudioMixer는 dB 단위 사용 (-80 ~ 0)
+    // 0~1 float을 dB로 변환해서 Mixer에 적용
     public void SetBGMVolume(float volume)
     {
         audioData.bgmVolume = Mathf.Clamp01(volume);
-        AudioSource active  = _isAActive ? _bgmSourceA : _bgmSourceB;
-        active.volume       = audioData.bgmVolume;
+        float db = volume > 0f ? Mathf.Log10(volume) * 20f : -80f;
+        audioData.audioMixer.SetFloat("BGMVolume", db);
     }
 
     public void SetSFXVolume(float volume)
     {
         audioData.sfxVolume = Mathf.Clamp01(volume);
-        foreach (AudioSource src in _sfxPool)
-            src.volume = audioData.sfxVolume;
+        float db = volume > 0f ? Mathf.Log10(volume) * 20f : -80f;
+        audioData.audioMixer.SetFloat("SFXVolume", db);
     }
+
+    // 현재 볼륨 반환 (UI Slider 초기값 설정용)
+    public float GetBGMVolume() => audioData.bgmVolume;
+    public float GetSFXVolume() => audioData.sfxVolume;
 }

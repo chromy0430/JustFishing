@@ -50,6 +50,7 @@ public class PlayerModeController : MonoBehaviour
                 rb.angularVelocity = Vector3.zero;
             }
             
+            AudioManager.Instance?.ForceStopShipMoving();
             _fishingController?.EnterFishingMode();
         }
         else

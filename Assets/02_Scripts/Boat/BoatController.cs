@@ -39,15 +39,11 @@ public class BoatController : MonoBehaviour
 
     private void HandleDrive()
     {
-        // 낚시 모드일 때 이동 차단
-        if (inputData.MoveInput == Vector2.zero) return;
-        
         float moveInput = inputData.MoveInput.y;
         float turnInput = inputData.MoveInput.x;
 
         _rb.angularVelocity = Vector3.zero;
 
-        // W/S : 보트 forward 방향으로 이동
         if (Mathf.Abs(moveInput) > 0.01f)
         {
             _rb.linearVelocity = transform.forward * (moveInput * boatData.moveSpeed);
@@ -55,16 +51,26 @@ public class BoatController : MonoBehaviour
         }
         else
         {
+            // 입력 없으면 즉시 정지
             _rb.linearVelocity = Vector3.zero;
             _rb.angularDamping = 50f;
             AudioManager.Instance?.StopShipMoving();
         }
 
-        // A/D : AlignToWater의 rotation 값 조절로 Y축 회전
         if (Mathf.Abs(turnInput) > 0.01f && _alignToWater != null)
         {
             _alignToWater.rotation += turnInput * boatData.rotateSpeed * Time.fixedDeltaTime;
-            _alignToWater.rotation %= 360f; // 0~360 범위 유지
+            _alignToWater.rotation %= 360f;
         }
+    }
+    
+    private void OnDisable()
+    {
+        if (_rb != null)
+        {
+            _rb.linearVelocity  = Vector3.zero;
+            _rb.angularVelocity = Vector3.zero;
+        }
+        AudioManager.Instance?.ForceStopShipMoving();
     }
 }
