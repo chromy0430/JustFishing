@@ -23,5 +23,8 @@ MonoBehaviour:
   zone1FishData:
   - {fileID: 11400000, guid: 9db14db094328804583d7aa8484736f2, type: 2}
   - {fileID: 11400000, guid: 41215bb4a095afc4898382ed9fc3ac35, type: 2}
+  - {fileID: 11400000, guid: 7c4c6a4e30eab6747baef855ac520c6e, type: 2}
+  - {fileID: 11400000, guid: 9c5afc190acbe894a8bcbff0dbbe7c85, type: 2}
+  - {fileID: 11400000, guid: 662da0eafc7c7cf4b9b1402049e06961, type: 2}
   zone2FishData: []
   zone3FishData: []

@@ -10,14 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 947b8eca7800bbf48b6e6b865c9a5c06, type: 3}
-  m_Name: FishData_1
+  m_Name: Fish_Mandarinfish
   m_EditorClassIdentifier: Assembly-CSharp::FishData
-  fishName: Test_1
-  fishSprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  fishHp: 300
-  noteSpeed: 200
-  notesPerSecond: 2
-  captureMax: 100
+  fishName: "\uC3D8\uAC00\uB9AC"
+  fishDescription: "\uBC14\uB2E4\uC5D0 \uC0AC\uB294 \uC3D8\uAC00\uB9AC\uB2E4.\n\uC81C\uBC95
+    \uC544\uB984\uB2F5\uB2E4."
+  fishSprite: {fileID: 21300000, guid: 76a2234b58374ff48b281f3be6d7b3ff, type: 3}
+  fishHp: 150
+  noteSpeed: 280
+  notesPerSecond: 3
   rhythmPattern: 0
-  perfectRange: 50
-  goodRange: 80
+  perfectRange: 40
+  goodRange: 60
+  basePrice: 80
+  maxLength: 200
+  maxWeight: 30

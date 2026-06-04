@@ -89,7 +89,7 @@ Material:
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BlendOp: 0
-    - _Blur: 0.15
+    - _Blur: 0.1
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
@@ -104,7 +104,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Intensity: 0.03
+    - _Intensity: 0.025
     - _Metal: 0.1
     - _Metallic: 0
     - _OcclusionStrength: 1
@@ -117,7 +117,7 @@ Material:
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _Speed: 8
+    - _Speed: 10
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 0
@@ -130,7 +130,7 @@ Material:
     - _Color: {r: 0.38679245, g: 0.38679245, b: 0.38679245, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _silhouette_Color: {r: 0.34905657, g: 0.34905657, b: 0.34905657, a: 1}
+    - _silhouette_Color: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &6613754987535902198

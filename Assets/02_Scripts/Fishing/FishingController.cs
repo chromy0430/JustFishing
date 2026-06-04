@@ -14,7 +14,7 @@ public class FishingController : MonoBehaviour
     [SerializeField] private FishingMinigame minigame;
     [SerializeField] private PlayerAnimator  playerAnimator; // YellowHuman_01에 있는 컴포넌트
     [SerializeField] private Transform       playerTransform;
-    [SerializeField] private Transform       exclamationMark; // 느낌표 파티클 Transform
+    [SerializeField] private GameObject      exclamationMark; // 느낌표 파티클 Transform
 
     [Header("Prefabs")]
     [SerializeField] private GameObject indicatorPrefab;
@@ -28,6 +28,7 @@ public class FishingController : MonoBehaviour
     private FishingBobber    _bobber;
     private FishData         _currentFishData;
     private FishAgent        _approachingFish; // 찌로 다가오는 물고기
+    private GameObject mark;
 
     public FishingState CurrentState { get; private set; } = FishingState.Idle;
 
@@ -45,7 +46,17 @@ public class FishingController : MonoBehaviour
             playerTransform = player.transform;
 
         if (exclamationMark != null)
-            exclamationMark.gameObject.SetActive(false);
+        {
+            mark = Instantiate(
+                exclamationMark,
+                playerTransform
+            );
+
+            mark.transform.localPosition = Vector3.up * 2.5f;
+            mark.SetActive(false);
+        }
+            
+        
     }
 
     private void Update()
@@ -92,8 +103,8 @@ public class FishingController : MonoBehaviour
 
         ReleaseApproachingFish();
 
-        if (exclamationMark != null)
-            exclamationMark.gameObject.SetActive(false);
+        if (mark != null)
+            mark.SetActive(false);
 
         // 낚시 모드 종료 → Idle로 복귀
         playerAnimator?.ExitFishingMode();
@@ -152,8 +163,8 @@ public class FishingController : MonoBehaviour
             inputData.ConsumeJump();
             CancelInvoke(nameof(OnBiteTimeout));
 
-            if (exclamationMark != null)
-                exclamationMark.gameObject.SetActive(false);
+            if (mark != null)
+                mark.SetActive(false);
 
             playerAnimator?.SetBiting(true);
             SetState(FishingState.Minigame);
@@ -230,8 +241,8 @@ public class FishingController : MonoBehaviour
         SetState(FishingState.Biting);
 
         // 느낌표 파티클 활성화
-        if (exclamationMark != null)
-            exclamationMark.gameObject.SetActive(true);
+        if (mark != null)
+            mark.SetActive(true);
 
         Invoke(nameof(OnBiteTimeout), fishingData.biteTimeLimit);
     }
@@ -240,8 +251,8 @@ public class FishingController : MonoBehaviour
     {
         if (CurrentState != FishingState.Biting) return;
 
-        if (exclamationMark != null)
-            exclamationMark.gameObject.SetActive(false);
+        if (mark != null)
+            mark.SetActive(false);
 
         ReleaseApproachingFish();
         _bobber.Hide();
@@ -257,20 +268,40 @@ public class FishingController : MonoBehaviour
     {
         playerAnimator?.SetBiting(false);
         _bobber.StopSplash();
-
+        
         if (success && _approachingFish != null)
         {
-            // 잡은 물고기 FishManager에서 제거 후 Destroy
+            // 물고기 인스턴스 생성
+            FishInstance newFish = new FishInstance(_currentFishData);
+
+            // 인벤토리 추가 시도
+            InventorySystem.AddResult result =
+                InventorySystem.Instance.TryAddFish(newFish);
+
+            if (result == InventorySystem.AddResult.Success)
+            {
+                Debug.Log($"물고기 획득: {newFish.fishData.fishName} " +
+                          $"({newFish.length:F1}cm / {newFish.weight:F1}kg / {newFish.price}G)");
+            }
+            else
+            {
+                // 인벤토리 가득 참 → 교체 UI 표시
+                InventoryReplaceUI.Instance?.Show(newFish, result);
+            }
+
             FishManager.Instance?.UnregisterFish(_approachingFish);
             Destroy(_approachingFish.gameObject);
             _approachingFish = null;
         }
-        else if (!success && _approachingFish != null)
+        else
         {
-            // 실패 → 물고기 다시 활성화 후 Boids 복귀
-            _approachingFish.gameObject.SetActive(true);
-            ReleaseApproachingFish();
+            if (_approachingFish != null)
+            {
+                _approachingFish.gameObject.SetActive(true);
+                ReleaseApproachingFish();
+            }
         }
+
 
         Debug.Log(success ? "낚시 성공!" : "낚시 실패!");
         

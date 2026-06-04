@@ -16,6 +16,10 @@ public class FishingMinigame : MonoBehaviour
     [SerializeField] private RectTransform perfectZone;   // 판정 기준점 (PerfectZone)
     [SerializeField] private RectTransform goodZone;      // 판정 기준점 (GoodZone)
     [SerializeField] private RectTransform noteSpawnArea;
+    
+    [Header("이미지 설정")]
+    [SerializeField] private Image        centerZoneImage;  // Img_CenterZone의 Image
+    [SerializeField] private List<Sprite> noteSprites;      // 노트 이미지 리스트
 
     [Header("Note")]
     [SerializeField] private GameObject notePrefab;
@@ -70,6 +74,10 @@ public class FishingMinigame : MonoBehaviour
         CircleCollider2D goodCol = goodZone.GetComponent<CircleCollider2D>();
         if (perfectCol != null) perfectCol.radius = _fishData.perfectRange;
         if (goodCol != null) goodCol.radius = _fishData.goodRange;
+        
+        // 중심원 이미지를 물고기 아이콘으로 변경
+        if (centerZoneImage != null && fishData.fishSprite != null)
+            centerZoneImage.sprite = fishData.fishSprite;
 
         _isPlaying = true;
         _activeNotes.Clear();
@@ -94,6 +102,13 @@ public class FishingMinigame : MonoBehaviour
         GameObject noteObj = Instantiate(notePrefab, noteSpawnArea);
         FishingNote note = noteObj.GetComponent<FishingNote>();
         if (note == null) { Debug.LogError("FishingNote 없음"); return; }
+        
+        // 랜덤 노트 이미지 설정
+        if (noteSprites != null && noteSprites.Count > 0)
+        {
+            Sprite randomSprite = noteSprites[UnityEngine.Random.Range(0, noteSprites.Count)];
+            note.SetSprite(randomSprite);
+        }
 
         note.Init(spawnPos, centerPos, _fishData.noteSpeed, this);
         _activeNotes.Add(note);

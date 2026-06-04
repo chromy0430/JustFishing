@@ -57,14 +57,14 @@ Material:
     m_Floats:
     - _AO: 1
     - _Blur: 0
-    - _Frequency: 15
-    - _Intensity: 0.03
+    - _Frequency: 12
+    - _Intensity: 0.05
     - _Metal: 0.1
     - _Offset: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Smoothness: 0.3
-    - _Speed: 8
+    - _Speed: 10
     - _Value: -1
     m_Colors: []
   m_BuildTextureStacks: []

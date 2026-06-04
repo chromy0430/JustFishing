@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class FishingNote : MonoBehaviour
 {
+    [SerializeField] private Image _noteImage;
+    
     private Vector2 _targetPos;
     private float _speed;
     private FishingMinigame _minigame;
@@ -97,5 +99,11 @@ public class FishingNote : MonoBehaviour
     {
         _isActive = false;
         Destroy(gameObject);
+    }
+    
+    public void SetSprite(Sprite sprite)
+    {
+        if (_noteImage != null)
+            _noteImage.sprite = sprite;
     }
 }
