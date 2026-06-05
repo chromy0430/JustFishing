@@ -26,8 +26,20 @@ public class SceneTransition : MonoBehaviour
     {
         StartCoroutine(TransitionRoutine(sceneName, delayBeforeFade));
     }
-
+    
     private IEnumerator TransitionRoutine(string sceneName, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        yield return StartCoroutine(Fade(0f, 1f));
+        yield return SceneManager.LoadSceneAsync(sceneName);
+        yield return StartCoroutine(Fade(1f, 0f));
+
+        // 페이드 인 완료 후 ZoneNotificationTrigger가 Start에서 알람 처리
+        // 별도 처리 불필요
+    }
+
+    /*private IEnumerator TransitionRoutine(string sceneName, float delay)
     {
         yield return new WaitForSeconds(delay);
 
@@ -38,7 +50,7 @@ public class SceneTransition : MonoBehaviour
 
         // 페이드 인
         yield return StartCoroutine(Fade(1f, 0f));
-    }
+    }*/
 
     private IEnumerator Fade(float from, float to)
     {

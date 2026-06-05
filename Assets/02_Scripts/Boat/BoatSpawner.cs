@@ -3,6 +3,7 @@
 // Ocean 씬의 빈 오브젝트에 부착
 public class BoatSpawner : MonoBehaviour
 {
+    [SerializeField] private WaterZoneController waterZone;
     [SerializeField] private BoatData boatData;
     [SerializeField] private Transform spawnPoint;
     [SerializeField] private Transform playerSpawnPos;
@@ -48,5 +49,11 @@ public class BoatSpawner : MonoBehaviour
         // PlayerModeController에 보트 + 낚시 컨트롤러 주입
         if (player.TryGetComponent<PlayerModeController>(out var modeCtrl))
             modeCtrl.OnBoardBoat(boatCtrl, fishingCtrl);
+        
+        BoatDurability durability = boat.GetComponent<BoatDurability>();
+        if (durability == null)
+            durability = boat.AddComponent<BoatDurability>();
+        durability.GetWaterZone(waterZone);
+        
     }
 }

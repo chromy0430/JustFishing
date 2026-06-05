@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7592a9ab128bdd44a96ce1cccc105ed6, type: 3}
+  m_Name: UpgradeData_Bucket
+  m_EditorClassIdentifier: Assembly-CSharp::UpgradeData
+  toolName: "\uC591\uB3D9\uC774"
+  levels:
+  - toolTipTitle: "\uB098\uBB34 \uC591\uB3D9\uC774"
+    toolTipDesc: "\uB098\uBB34\uB85C \uB9CC\uB4E4\uC5B4\uC9C4 \uC591\uB3D9\uC774\uB2E4."
+    toolTipStat: "\uD14C\uC2A4\uD2B8\uC911"
+    icon: {fileID: 21300000, guid: c7ecb26975aa33d41ad469e75ba53c8d, type: 3}
+    goldCost: 30
+    requiredFish: {fileID: 0}
+    requiredFishCount: 0
+  - toolTipTitle: "\uCCA0 \uC591\uB3D9\uC774"
+    toolTipDesc: "\uCCA0\uB85C \uB9CC\uB4E4\uC5B4\uC9C4 \uC591\uB3D9\uC774\uB2E4."
+    toolTipStat: "\uD14C\uC2A4\uD2B8\uC911"
+    icon: {fileID: 21300000, guid: c97e7d3219cc5854095bc21f626c0d95, type: 3}
+    goldCost: 80
+    requiredFish: {fileID: 0}
+    requiredFishCount: 0
+  - toolTipTitle: "\uB9C8\uB825 \uBC15\uC2A4"
+    toolTipDesc: "\uB9C8\uB825\uC774 \uAE43\uB4E0 \uC2E0\uBE44\uB85C\uC6B4 \uBC15\uC2A4\uB2E4."
+    toolTipStat: "\uD14C\uC2A4\uD2B8\uC911"
+    icon: {fileID: 21300000, guid: 02be240925eb6bc408745b27f4e85bec, type: 3}
+    goldCost: 300
+    requiredFish: {fileID: 0}
+    requiredFishCount: 0

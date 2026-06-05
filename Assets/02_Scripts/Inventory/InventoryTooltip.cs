@@ -26,6 +26,18 @@ public class InventoryTooltip : MonoBehaviour
         tooltipPanel.SetActive(true);
         UpdatePosition();
     }
+    
+    // 기존 Show 유지, 강화용 추가
+    public void ShowUpgrade(string title, string desc, string stat, string cost, string status)
+    {
+        nameTxt.text  = title;
+        descTxt.text  = desc;
+        sizeTxt.text  = $"{stat}\n{cost}";
+        priceTxt.text = status;
+
+        tooltipPanel.SetActive(true);
+        UpdatePosition();
+    }
 
     public void Hide()
     {
