@@ -4,17 +4,23 @@ using StylizedWater3;
 [RequireComponent(typeof(Rigidbody))]
 public class BoatController : MonoBehaviour
 {
-    [SerializeField] private BoatData boatData;
     [SerializeField] private PlayerInputData inputData;
 
     private Rigidbody _rb;
     private AlignToWater _alignToWater;
     private bool _isDriving = true;
+    private BoatLevelData _levelData;
 
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
         _alignToWater = GetComponent<AlignToWater>();
+    }
+    
+    // BoatSpawner에서 레벨 데이터 주입
+    public void SetLevelData(BoatLevelData levelData)
+    {
+        _levelData = levelData;
     }
 
     public void Init(Transform player) { }
@@ -34,11 +40,12 @@ public class BoatController : MonoBehaviour
         if (!inputData.ModeTogglePressed) return;
         inputData.ConsumeModeToggle();
         _isDriving = !_isDriving;
-        Debug.Log(_isDriving ? "운전 모드" : "낚시 모드");
     }
 
     private void HandleDrive()
     {
+        if (_levelData == null) return;
+
         float moveInput = inputData.MoveInput.y;
         float turnInput = inputData.MoveInput.x;
 
@@ -46,12 +53,11 @@ public class BoatController : MonoBehaviour
 
         if (Mathf.Abs(moveInput) > 0.01f)
         {
-            _rb.linearVelocity = transform.forward * (moveInput * boatData.moveSpeed);
+            _rb.linearVelocity = transform.forward * (moveInput * _levelData.moveSpeed);
             AudioManager.Instance?.StartShipMoving();
         }
         else
         {
-            // 입력 없으면 즉시 정지
             _rb.linearVelocity = Vector3.zero;
             _rb.angularDamping = 50f;
             AudioManager.Instance?.StopShipMoving();
@@ -59,11 +65,11 @@ public class BoatController : MonoBehaviour
 
         if (Mathf.Abs(turnInput) > 0.01f && _alignToWater != null)
         {
-            _alignToWater.rotation += turnInput * boatData.rotateSpeed * Time.fixedDeltaTime;
+            _alignToWater.rotation += turnInput * _levelData.rotateSpeed * Time.fixedDeltaTime;
             _alignToWater.rotation %= 360f;
         }
     }
-    
+
     private void OnDisable()
     {
         if (_rb != null)

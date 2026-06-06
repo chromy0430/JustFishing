@@ -34,7 +34,7 @@ public class FishData : ScriptableObject
     // 랜덤 무게 생성 (가벼울수록 확률 높음)
     public float GetRandomWeight()
     {
-        float rand = Random.value;
+        float rand = Random.value + 1;
         return Mathf.Pow(rand, 2f) * maxWeight;
     }
 

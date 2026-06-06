@@ -35,6 +35,9 @@ public class InventoryUI : MonoBehaviour
 
     private void OnEnable()
     {
+        if (InventorySystem.Instance == null) return;
+        // 중복 방지를 위해 먼저 제거 후 추가
+        InventorySystem.Instance.OnInventoryChanged -= RefreshUI;
         InventorySystem.Instance.OnInventoryChanged += RefreshUI;
     }
 

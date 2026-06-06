@@ -1,0 +1,169 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &2050644305179180670
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3725054097779490160}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 510f9dbd90c32bf48b9e48e610ac80c5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 510f9dbd90c32bf48b9e48e610ac80c5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 510f9dbd90c32bf48b9e48e610ac80c5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 510f9dbd90c32bf48b9e48e610ac80c5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 510f9dbd90c32bf48b9e48e610ac80c5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 510f9dbd90c32bf48b9e48e610ac80c5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 510f9dbd90c32bf48b9e48e610ac80c5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 510f9dbd90c32bf48b9e48e610ac80c5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 510f9dbd90c32bf48b9e48e610ac80c5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 510f9dbd90c32bf48b9e48e610ac80c5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 510f9dbd90c32bf48b9e48e610ac80c5, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: d88402c4132391140adb0a07821e3f2b, type: 2}
+    - target: {fileID: 919132149155446097, guid: 510f9dbd90c32bf48b9e48e610ac80c5, type: 3}
+      propertyPath: m_Name
+      value: Wood_Boat_Depth_01
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 510f9dbd90c32bf48b9e48e610ac80c5, type: 3}
+--- !u!4 &2017581142434945429 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 510f9dbd90c32bf48b9e48e610ac80c5, type: 3}
+  m_PrefabInstance: {fileID: 2050644305179180670}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3762957094152510107
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: d39bb5e92dfa2ba45a61da339d02edee, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 13.4
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d39bb5e92dfa2ba45a61da339d02edee, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.5696106
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d39bb5e92dfa2ba45a61da339d02edee, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -8.4
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d39bb5e92dfa2ba45a61da339d02edee, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.43048015
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d39bb5e92dfa2ba45a61da339d02edee, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.011871455
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d39bb5e92dfa2ba45a61da339d02edee, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.9025203
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d39bb5e92dfa2ba45a61da339d02edee, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.0017778531
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d39bb5e92dfa2ba45a61da339d02edee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d39bb5e92dfa2ba45a61da339d02edee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: d39bb5e92dfa2ba45a61da339d02edee, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: d39bb5e92dfa2ba45a61da339d02edee, type: 3}
+      propertyPath: m_Name
+      value: Wood_Boat_01
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: d39bb5e92dfa2ba45a61da339d02edee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2017581142434945429}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d39bb5e92dfa2ba45a61da339d02edee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4625261632333761832}
+  m_SourcePrefab: {fileID: 100100000, guid: d39bb5e92dfa2ba45a61da339d02edee, type: 3}
+--- !u!4 &3725054097779490160 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d39bb5e92dfa2ba45a61da339d02edee, type: 3}
+  m_PrefabInstance: {fileID: 3762957094152510107}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4105554821442054090 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d39bb5e92dfa2ba45a61da339d02edee, type: 3}
+  m_PrefabInstance: {fileID: 3762957094152510107}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4625261632333761832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4105554821442054090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95144392e6eede14cafa2d339e5c1ee9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: sc.stylizedwater3.runtime::StylizedWater3.AlignToWater
+  heightInterface:
+    method: 0
+    waterObject: {fileID: 0}
+    autoFind: 1
+    waveProfile: {fileID: 0}
+    waterLevelSource: 1
+    waterLevelTransform: {fileID: 0}
+    waterLevel: 0
+  surfaceSize: {x: 6.2578125, y: 11.9765625}
+  followTarget: {fileID: 0}
+  heightOffset: -1
+  rollAmount: 0.1
+  rotation: 129
+  smoothing: 0.1
+  heightValue: 0
+  rigidbody: {fileID: 0}

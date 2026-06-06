@@ -166,12 +166,24 @@ public class FishingController : MonoBehaviour
             if (mark != null)
                 mark.SetActive(false);
 
+            // null이면 재시도
+            if (_currentFishData == null)
+                _currentFishData = GetRandomFishData();
+
+            if (_currentFishData == null)
+            {
+                Debug.LogError("FishData null - 미니게임 진입 불가");
+                ReturnToAiming();
+                return;
+            }
+
             playerAnimator?.SetBiting(true);
             SetState(FishingState.Minigame);
             _bobber.PlaySplash();
             minigame.StartMinigame(fishingData, _currentFishData, OnMinigameResult);
         }
     }
+
 
     private void OnBobberLanded()
     {
@@ -280,6 +292,10 @@ public class FishingController : MonoBehaviour
 
             if (result == InventorySystem.AddResult.Success)
             {
+                // 현재 Zone 정보와 함께 퀘스트 진행
+                int currentZone = FishManager.Instance?.GetCurrentZone() ?? 1;
+                QuestSystem.Instance?.OnFishCaught(newFish, currentZone);
+                
                 Debug.Log($"물고기 획득: {newFish.fishData.fishName} " +
                           $"({newFish.length:F1}cm / {newFish.weight:F1}kg / {newFish.price}G)");
             }

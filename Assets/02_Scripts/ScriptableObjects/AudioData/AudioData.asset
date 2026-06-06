@@ -20,7 +20,8 @@ MonoBehaviour:
   bgmOcean02: {fileID: 8300000, guid: 0cbcf5b2f14714548a1f02b442737c8f, type: 3}
   sfxEnhance: {fileID: 8300000, guid: 8ed2261fd0a7c5444a954fb2d058b228, type: 3}
   sfxPurchase: {fileID: 8300000, guid: 1e9fad67cf85edd4ab2017ea7106eab9, type: 3}
-  sfxShipMoving: {fileID: 8300000, guid: 8c79f3c457857f5459af28b6d6bfc7b2, type: 3}
+  sfxShipMoving: {fileID: 8300000, guid: 2bff76eee7d70124eb8ade72309f7b12, type: 3}
   sfxSplash: {fileID: 8300000, guid: ae969fc90b98c924ca1f29449c300ce2, type: 3}
+  sfxUIClick: {fileID: 8300000, guid: b9f593e523f94ab4b92df4b2e34fdca2, type: 3}
   bgmVolume: 0.5
   sfxVolume: 1

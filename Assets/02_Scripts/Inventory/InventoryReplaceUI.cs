@@ -64,6 +64,11 @@ public class InventoryReplaceUI : MonoBehaviour
     private void OnReplaceSelected(FishInstance oldFish)
     {
         InventorySystem.Instance.ReplaceFish(oldFish, _newFish);
+
+        // 교체 성공 시에도 퀘스트 진행
+        int currentZone = FishManager.Instance?.GetCurrentZone() ?? 1;
+        QuestSystem.Instance?.OnFishCaught(_newFish, currentZone);
+
         Hide();
     }
 

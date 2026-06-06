@@ -11,51 +11,54 @@ public class BoatRepairUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI durabilityTxt;
 
     [Header("수리 정보")]
-    [SerializeField] private TextMeshProUGUI repairPercentTxt;  // 수리 필요량 %
-    [SerializeField] private TextMeshProUGUI repairCostTxt;     // 수리 비용
+    [SerializeField] private TextMeshProUGUI repairPercentTxt;
+    [SerializeField] private TextMeshProUGUI repairCostTxt;
     [SerializeField] private Button          repairButton;
 
     [Header("Data")]
-    [SerializeField] private BoatDurabilityData boatData;
+    [SerializeField] private BoatData boatData;
 
-    // 수리 비용 계산 (내구도 1당 골드)
     private const float REPAIR_COST_PER_DURABILITY = 10f;
 
-    private BoatDurability _boatDurability;
+    private BoatLevelData  _currentLevelData;
+    private float          _savedDurability;
+    private float          _maxDurability;
 
     private void OnEnable()
     {
-        // BoatDurability를 씬에서 찾기
-        _boatDurability = FindFirstObjectByType<BoatDurability>();
-
-        if (_boatDurability != null)
-            _boatDurability.OnDurabilityChanged += RefreshUI;
-
-        RefreshUI(
-            _boatDurability?.CurrentDurability ?? boatData.maxDurability,
-            boatData.maxDurability);
-    }
-
-    private void OnDisable()
-    {
-        if (_boatDurability != null)
-            _boatDurability.OnDurabilityChanged -= RefreshUI;
+        LoadBoatData();
+        RefreshUI();
     }
 
     private void Start()
     {
         repairButton.onClick.AddListener(OnRepairClick);
-        boatNameTxt.text = boatData.boatName;
     }
 
-    private void RefreshUI(float current, float max)
+    private void LoadBoatData()
     {
-        float ratio        = current / max;
-        durabilityFill.fillAmount = ratio;
-        durabilityTxt.text = $"{Mathf.RoundToInt(current)}/{Mathf.RoundToInt(max)}";
+        // PlayerPrefs에서 현재 보트 레벨 읽기
+        int level = PlayerPrefs.GetInt("Upgrade_보트", 0);
+        level = Mathf.Clamp(level, 0, boatData.levels.Length - 1);
 
-        // 수리 필요량
-        float missingDurability = max - current;
+
+        boatIcon.sprite = boatData.levels[level].boatIcon;
+        _currentLevelData = boatData.levels[level];
+        _maxDurability    = _currentLevelData.maxDurability;
+        _savedDurability  = PlayerPrefs.GetFloat("BoatDurability", _maxDurability);
+
+        boatNameTxt.text  = _currentLevelData.boatName;
+    }
+
+    private void RefreshUI()
+    {
+        float ratio = _savedDurability / _maxDurability;
+
+        durabilityFill.fillAmount = ratio;
+        durabilityTxt.text        = $"{Mathf.RoundToInt(_savedDurability)}" +
+                                    $"/{Mathf.RoundToInt(_maxDurability)}";
+
+        float missingDurability = _maxDurability - _savedDurability;
         float repairPercent     = (1f - ratio) * 100f;
         int   repairCost        = Mathf.RoundToInt(
             missingDurability * REPAIR_COST_PER_DURABILITY);
@@ -63,25 +66,28 @@ public class BoatRepairUI : MonoBehaviour
         repairPercentTxt.text = $"{repairPercent:F0}%";
         repairCostTxt.text    = $"{repairCost} G";
 
-        // 내구도 가득 차있으면 버튼 비활성화
-        repairButton.interactable = current < max;
+        repairButton.interactable = _savedDurability < _maxDurability;
     }
 
     private void OnRepairClick()
     {
-        if (_boatDurability == null) return;
-
-        float missingDurability = boatData.maxDurability - _boatDurability.CurrentDurability;
+        float missingDurability = _maxDurability - _savedDurability;
         int   repairCost        = Mathf.RoundToInt(
             missingDurability * REPAIR_COST_PER_DURABILITY);
 
         if (!PlayerWallet.Instance.SpendGold(repairCost))
         {
-            Debug.Log("골드 부족");
+            NotificationManager.Instance?.ShowMessage("골드가 부족합니다.");
             return;
         }
 
-        _boatDurability.FullRepair();
-        Debug.Log($"수리 완료: {repairCost}G 소비");
+        // 내구도 복구 후 저장
+        _savedDurability = _maxDurability;
+        PlayerPrefs.SetFloat("BoatDurability", _savedDurability);
+        PlayerPrefs.Save();
+
+        RefreshUI();
+        NotificationManager.Instance?.ShowMessage(
+            $"{_currentLevelData.boatName} 수리 완료!");
     }
 }

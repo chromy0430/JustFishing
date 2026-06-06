@@ -68,7 +68,7 @@ public class InventoryTooltip : MonoBehaviour
 
         // 오른쪽 밖으로 나가면 왼쪽으로
         if (targetPos.x + tooltipW > screenW)
-            targetPos.x = mousePos.x - tooltipW - 10f;
+            targetPos.x = mousePos.x - 200f;
 
         // 위쪽 밖으로 나가면 아래로
         if (targetPos.y + tooltipH > screenH)

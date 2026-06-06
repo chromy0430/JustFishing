@@ -10,27 +10,36 @@ public class BoatSpawner : MonoBehaviour
     // BoatSpawner.cs
     private void Start()
     {
-        GameObject boat = Instantiate(boatData.boatPrefab, spawnPoint.position, spawnPoint.rotation);
+        int level = PlayerPrefs.GetInt("Upgrade_보트", 0);
+        level = Mathf.Clamp(level, 0, boatData.levels.Length - 1);
+        BoatLevelData levelData = boatData.levels[level];
 
+        GameObject boat = Instantiate(
+            levelData.oceanPrefab,
+            spawnPoint.position,
+            spawnPoint.rotation);
+
+        // BoatController에 레벨 데이터 주입
+        BoatController boatCtrl = boat.GetComponent<BoatController>();
+        boatCtrl?.SetLevelData(levelData);
+
+        // BoatDurability에 레벨 데이터 주입
+        BoatDurability durability = boat.GetComponent<BoatDurability>();
+        durability?.SetLevelData(levelData);
+        durability?.GetWaterZone(waterZone);
+
+        // 이하 기존 코드
         GameObject player = GameObject.FindWithTag("Player");
         if (player == null) { Debug.LogError("Player 없음"); return; }
 
         player.transform.SetParent(boat.transform);
         player.transform.localPosition = new Vector3(0f, 1f, 0f);
-        player.transform.localRotation = Quaternion.identity;
 
         if (player.TryGetComponent<CharacterController>(out var cc)) cc.enabled = false;
         if (player.TryGetComponent<PlayerMove>(out var pm)) pm.enabled = false;
 
-        BoatController boatCtrl = boat.GetComponent<BoatController>();
         boatCtrl?.Init(player.transform);
 
-        // PlayerAnimator 찾기 (자식 오브젝트인 YellowHuman_01에 있음)
-        PlayerAnimator playerAnim = player.GetComponentInChildren<PlayerAnimator>();
-        if (playerAnim != null)
-            playerAnim.SetOnBoat(true);
-
-        // CameraStabilizer + Cinemachine 연결
         CameraStabilizer stabilizer = FindFirstObjectByType<CameraStabilizer>();
         if (stabilizer != null) stabilizer.SetTarget(boat.transform);
 
@@ -38,22 +47,14 @@ public class BoatSpawner : MonoBehaviour
         if (vcam != null && stabilizer != null)
             vcam.Target.TrackingTarget = stabilizer.transform;
 
-        // FishingController 참조 + 주입
         FishingController fishingCtrl = FindFirstObjectByType<FishingController>();
-        if (fishingCtrl != null)
-        {
-            fishingCtrl.SetCamera(Camera.main);
-            fishingCtrl.SetPlayerAnimator(playerAnim); // PlayerAnimator 주입
-        }
+        fishingCtrl?.SetCamera(Camera.main);
 
-        // PlayerModeController에 보트 + 낚시 컨트롤러 주입
+        PlayerAnimator playerAnim = player.GetComponentInChildren<PlayerAnimator>();
+        playerAnim?.SetOnBoat(true);
+        fishingCtrl?.SetPlayerAnimator(playerAnim);
+
         if (player.TryGetComponent<PlayerModeController>(out var modeCtrl))
             modeCtrl.OnBoardBoat(boatCtrl, fishingCtrl);
-        
-        BoatDurability durability = boat.GetComponent<BoatDurability>();
-        if (durability == null)
-            durability = boat.AddComponent<BoatDurability>();
-        durability.GetWaterZone(waterZone);
-        
     }
 }

@@ -19,7 +19,9 @@ public class AudioData : ScriptableObject
     public AudioClip sfxPurchase;
     public AudioClip sfxShipMoving;
     public AudioClip sfxSplash;
+    public AudioClip sfxUIClick;
 
+    
     [Header("볼륨 설정")]
     [Range(0f, 1f)] public float bgmVolume = 0.5f;
     [Range(0f, 1f)] public float sfxVolume = 1.0f;

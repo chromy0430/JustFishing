@@ -10,6 +10,23 @@ public class UpgradeSlot : MonoBehaviour,
     private UpgradeData  _data;
     private int          _slotIndex;
     private InventoryTooltip _tooltip;
+    
+    private void OnEnable()
+    {
+        if (UpgradeSystem.Instance != null)
+            UpgradeSystem.Instance.OnUpgradeChanged += Refresh;
+        if (PlayerWallet.Instance != null)
+            PlayerWallet.Instance.OnGoldChanged += _ => Refresh();
+    }
+    
+    private void OnDisable()
+    {
+        if (UpgradeSystem.Instance != null)
+            UpgradeSystem.Instance.OnUpgradeChanged -= Refresh;
+        if (PlayerWallet.Instance != null)
+            PlayerWallet.Instance.OnGoldChanged -= _ => Refresh();
+    }
+
 
     public void Init(UpgradeData data, int index, InventoryTooltip tooltip)
     {
@@ -131,7 +148,5 @@ public class UpgradeSlot : MonoBehaviour,
             // NotificationData를 런타임에 생성
             NotificationManager.Instance?.ShowMessage(message);
         }
-        
-        Refresh();
     }
 }

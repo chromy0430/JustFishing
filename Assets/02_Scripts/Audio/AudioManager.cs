@@ -92,8 +92,6 @@ public class AudioManager : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         PlayBGMForCurrentScene();
-
-        // 씬 전환 시 ShipMoving 즉시 정지
         ForceStopShipMoving();
     }
 
@@ -196,6 +194,11 @@ public class AudioManager : MonoBehaviour
         foreach (AudioSource src in _sfxPool)
             if (!src.isPlaying) return src;
         return null;
+    }
+    
+    public void PlayUIClick()
+    {
+        PlaySFX(audioData.sfxUIClick, allowOverlap: false);
     }
 
     // ==================== 개별 SFX ====================
