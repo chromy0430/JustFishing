@@ -20,8 +20,8 @@ public class FishData : ScriptableObject
 
     [Header("가격/크기")]
     public int   basePrice   = 100;   // 기본 가격
-    public float maxLength   = 200f;  // 최대 길이 (cm)
-    public float maxWeight   = 30f;   // 최대 무게 (kg)
+    public float maxLength   = 100f;  // 최대 길이 (cm)
+    public float maxWeight   = 10f;   // 최대 무게 (kg)
     
     // 랜덤 길이 생성 (짧을수록 확률 높음)
     public float GetRandomLength()
@@ -34,7 +34,7 @@ public class FishData : ScriptableObject
     // 랜덤 무게 생성 (가벼울수록 확률 높음)
     public float GetRandomWeight()
     {
-        float rand = Random.value + 1;
+        float rand = Random.value + 0.1f;
         return Mathf.Pow(rand, 2f) * maxWeight;
     }
 

@@ -15,7 +15,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private InventoryTooltip tooltip;
 
     [Header("무게 게이지")]
-    [SerializeField] private Image           weightFill;
+    [SerializeField] private Slider          weightFill;
     [SerializeField] private TextMeshProUGUI weightTxt;
     [SerializeField] private TextMeshProUGUI slotTxt;
     [SerializeField] private TextMeshProUGUI bucketLevelTxt;
@@ -92,7 +92,7 @@ public class InventoryUI : MonoBehaviour
         if (weightFill == null) return;
 
         // 무게 게이지
-        weightFill.fillAmount = inv.WeightRatio;
+        weightFill.value = inv.WeightRatio;
         weightTxt.text        = $"{inv.CurrentWeight:F1} / {inv.MaxWeight}kg";
         slotTxt.text          = $"{inv.Items.Count} / {inv.MaxSlots}";
         bucketLevelTxt.text   = $"양동이 Lv.{inv.BucketLevel}";

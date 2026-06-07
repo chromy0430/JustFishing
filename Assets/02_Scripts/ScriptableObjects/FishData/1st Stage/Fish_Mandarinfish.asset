@@ -23,5 +23,5 @@ MonoBehaviour:
   perfectRange: 40
   goodRange: 60
   basePrice: 80
-  maxLength: 200
-  maxWeight: 30
+  maxLength: 30
+  maxWeight: 10

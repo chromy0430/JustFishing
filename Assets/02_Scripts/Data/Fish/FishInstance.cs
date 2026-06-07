@@ -13,4 +13,11 @@ public class FishInstance
         weight   = data.GetRandomWeight();
         price    = data.CalculatePrice(length, weight);
     }
+    
+    public void OverrideValues(float l, float w, int p)
+    {
+        length = l;
+        weight = w;
+        price  = p;
+    }
 }

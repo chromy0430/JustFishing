@@ -42,6 +42,8 @@ public class InventorySystem : MonoBehaviour
     {
         bool slotFull   = _items.Count  >= MaxSlots;
         bool weightFull = CurrentWeight + fish.weight > MaxWeight;
+        
+        Debug.Log($"슬롯: {_items.Count}/{MaxSlots}, 무게: {CurrentWeight}/{MaxWeight}, 추가무게: {fish.weight}");
 
         if (slotFull || weightFull)
         {
@@ -83,6 +85,13 @@ public class InventorySystem : MonoBehaviour
             _currentLevel++;
             OnInventoryChanged?.Invoke();
         }
+    }
+    
+    public void ClearInventory()
+    {
+        _items.Clear();
+        _currentLevel = 0;
+        OnInventoryChanged?.Invoke();
     }
 
     public int   BucketLevel => _currentLevel + 1;

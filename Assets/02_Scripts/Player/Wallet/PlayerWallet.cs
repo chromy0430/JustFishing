@@ -37,6 +37,14 @@ public class PlayerWallet : MonoBehaviour
         OnGoldChanged?.Invoke(Gold);
         return true;
     }
+    
+    public void ResetGold()
+    {
+        Gold = 0;
+        PlayerPrefs.SetInt(KEY_GOLD, 0);
+        PlayerPrefs.Save();
+        OnGoldChanged?.Invoke(Gold);
+    }
 
     [ContextMenu("+1000Gold")]
     public void Add1000G()

@@ -37,19 +37,28 @@ public class SettingsUI : MonoBehaviour
         new Resolution { width = 2560, height = 1440 },
         new Resolution { width = 3840, height = 2160 },
     };
+    
+    private void OnEnable()
+    {
+        // UI 열릴 때 현재 상태를 UI에 반영 (적용은 하지 않음)
+        LoadSettingsToUI();
+    }
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
         
-        DontDestroyOnLoad(this);
+        //DontDestroyOnLoad(this);
+        
+        InitResolutionDropdown();
+        ApplySavedSettings();
     }
 
     private void Start()
     {
-        InitResolutionDropdown();
-        LoadSettings();
+        //InitResolutionDropdown();
+        //LoadSettings();
         AddListeners();
     }
 
@@ -64,13 +73,25 @@ public class SettingsUI : MonoBehaviour
             options.Add($"{res.width} x {res.height}");
 
         _resolutionDropdown.AddOptions(options);
+
+        // 저장된 해상도 인덱스 적용
+        int resIndex = PlayerPrefs.GetInt(KEY_RESOLUTION, 1);
+        resIndex = Mathf.Clamp(resIndex, 0, _supportedResolutions.Length - 1);
+        _resolutionDropdown.value = resIndex;
+        _resolutionDropdown.RefreshShownValue();
     }
 
     private void AddListeners()
     {
-        _saveButton.onClick.AddListener(SaveSettings);
+        _saveButton.onClick.AddListener(SaveAndApplySettings);
 
         if (_closeButton != null)
+            _closeButton.onClick.AddListener(() => gameObject.SetActive(false));
+
+        _bgmSlider.onValueChanged.AddListener(OnBGMSliderChanged);
+        _sfxSlider.onValueChanged.AddListener(OnSFXSliderChanged);
+
+        /*if (_closeButton != null)
             _closeButton.onClick.AddListener(() => gameObject.SetActive(false));
 
         // 슬라이더 실시간 적용
@@ -81,7 +102,7 @@ public class SettingsUI : MonoBehaviour
         _fullscreenCheckBox.checkBtn.onClick.AddListener(OnFullscreenToggled);
 
         // 수직동기화 실시간 적용
-        _vsyncCheckBox.checkBtn.onClick.AddListener(OnVSyncToggled);
+        _vsyncCheckBox.checkBtn.onClick.AddListener(OnVSyncToggled);*/
     }
 
     // ==================== 불러오기 ====================
@@ -116,6 +137,58 @@ public class SettingsUI : MonoBehaviour
         float sfxVolume = PlayerPrefs.GetFloat(KEY_SFX_VOLUME, 1.0f);
         _sfxSlider.value = sfxVolume;
         AudioManager.Instance?.SetSFXVolume(sfxVolume);
+    }
+    
+    private void LoadSettingsToUI()
+    {
+        // 해상도
+        int resIndex = PlayerPrefs.GetInt(KEY_RESOLUTION, 1);
+        resIndex = Mathf.Clamp(resIndex, 0, _supportedResolutions.Length - 1);
+        _resolutionDropdown.value = resIndex;
+        _resolutionDropdown.RefreshShownValue();
+
+        // 전체화면 - 현재 실제 상태를 UI에 반영
+        bool isFullscreen = Screen.fullScreen;
+        if (isFullscreen) _fullscreenCheckBox.OnCheckBox();
+        else              _fullscreenCheckBox.OffCheckBox();
+
+        // 수직동기화 - 현재 실제 상태를 UI에 반영
+        bool isVSync = QualitySettings.vSyncCount > 0;
+        if (isVSync) _vsyncCheckBox.OnCheckBox();
+        else         _vsyncCheckBox.OffCheckBox();
+
+        // 볼륨 - 저장값 표시
+        float bgmVolume = PlayerPrefs.GetFloat(KEY_BGM_VOLUME, 0.5f);
+        float sfxVolume = PlayerPrefs.GetFloat(KEY_SFX_VOLUME, 1.0f);
+        _bgmSlider.value = bgmVolume;
+        _sfxSlider.value = sfxVolume;
+    }
+
+    // 저장 버튼 눌렀을 때만 적용 + 저장
+    private void SaveAndApplySettings()
+    {
+        // 해상도 적용
+        int resIndex = _resolutionDropdown.value;
+        Resolution res = _supportedResolutions[resIndex];
+        Screen.SetResolution(res.width, res.height, Screen.fullScreen);
+        PlayerPrefs.SetInt(KEY_RESOLUTION, resIndex);
+
+        // 전체화면 적용
+        bool isFullscreen = _fullscreenCheckBox.isOn;
+        Screen.fullScreen = isFullscreen;
+        PlayerPrefs.SetInt(KEY_FULLSCREEN, isFullscreen ? 1 : 0);
+
+        // 수직동기화 적용
+        bool isVSync = _vsyncCheckBox.isOn;
+        QualitySettings.vSyncCount = isVSync ? 1 : 0;
+        PlayerPrefs.SetInt(KEY_VSYNC, isVSync ? 1 : 0);
+
+        // 볼륨 저장 (이미 실시간 적용 중)
+        PlayerPrefs.SetFloat(KEY_BGM_VOLUME, _bgmSlider.value);
+        PlayerPrefs.SetFloat(KEY_SFX_VOLUME, _sfxSlider.value);
+
+        PlayerPrefs.Save();
+        NotificationManager.Instance?.ShowMessage("설정이 저장되었습니다.");
     }
 
     // ==================== 저장 ====================
@@ -153,6 +226,7 @@ public class SettingsUI : MonoBehaviour
         // 대신 현재 상태 반전으로 처리
         Screen.fullScreen = _fullscreenCheckBox.isOn;
     }
+    
 
     private void OnVSyncToggled()
     {
@@ -165,5 +239,26 @@ public class SettingsUI : MonoBehaviour
         Screen.SetResolution(res.width, res.height, Screen.fullScreen);
     }
     
-    
+    private void ApplySavedSettings()
+    {
+        // 해상도
+        int resIndex = PlayerPrefs.GetInt(KEY_RESOLUTION, 1);
+        resIndex = Mathf.Clamp(resIndex, 0, _supportedResolutions.Length - 1);
+        Resolution res = _supportedResolutions[resIndex];
+        Screen.SetResolution(res.width, res.height, Screen.fullScreen);
+
+        // 전체화면
+        bool isFullscreen = PlayerPrefs.GetInt(KEY_FULLSCREEN, 0) == 1;
+        Screen.fullScreen = isFullscreen;
+
+        // 수직동기화
+        bool isVSync = PlayerPrefs.GetInt(KEY_VSYNC, 0) == 1;
+        QualitySettings.vSyncCount = isVSync ? 1 : 0;
+
+        // 볼륨
+        float bgmVolume = PlayerPrefs.GetFloat(KEY_BGM_VOLUME, 0.5f);
+        float sfxVolume = PlayerPrefs.GetFloat(KEY_SFX_VOLUME, 1.0f);
+        AudioManager.Instance?.SetBGMVolume(bgmVolume);
+        AudioManager.Instance?.SetSFXVolume(sfxVolume);
+    }
 }

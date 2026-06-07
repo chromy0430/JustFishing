@@ -292,16 +292,38 @@ public class FishingController : MonoBehaviour
 
             if (result == InventorySystem.AddResult.Success)
             {
-                // 현재 Zone 정보와 함께 퀘스트 진행
+                NotificationManager.Instance?.ShowMessage(
+                    $"{newFish.fishData.fishName} ({newFish.weight:F1}kg)을 잡았습니다!");
+
                 int currentZone = FishManager.Instance?.GetCurrentZone() ?? 1;
                 QuestSystem.Instance?.OnFishCaught(newFish, currentZone);
-                
+
                 Debug.Log($"물고기 획득: {newFish.fishData.fishName} " +
                           $"({newFish.length:F1}cm / {newFish.weight:F1}kg / {newFish.price}G)");
             }
-            else
+            else if (result == InventorySystem.AddResult.WeightFull)
             {
-                // 인벤토리 가득 참 → 교체 UI 표시
+                float remaining = InventorySystem.Instance.MaxWeight - InventorySystem.Instance.CurrentWeight;
+                NotificationManager.Instance?.ShowMessage(
+                    $"무게 한도 초과! 남은 공간: {remaining:F1}kg");
+
+                InventoryReplaceUI.Instance?.Show(newFish, result);
+            }
+            else if (result == InventorySystem.AddResult.SlotFull)
+            {
+                int maxSlots     = InventorySystem.Instance.MaxSlots;
+                NotificationManager.Instance?.ShowMessage(
+                    $"양동이가 가득 찼습니다! ({maxSlots}/{maxSlots})");
+
+                InventoryReplaceUI.Instance?.Show(newFish, result);
+            }
+            else if (result == InventorySystem.AddResult.BothFull)
+            {
+                float remaining = InventorySystem.Instance.MaxWeight - InventorySystem.Instance.CurrentWeight;
+                int   maxSlots  = InventorySystem.Instance.MaxSlots;
+                NotificationManager.Instance?.ShowMessage(
+                    $"슬롯({maxSlots}/{maxSlots})과 무게({remaining:F1}kg 남음) 모두 한도 초과!");
+
                 InventoryReplaceUI.Instance?.Show(newFish, result);
             }
 

@@ -4,16 +4,26 @@ using UnityEngine.InputSystem;
 
 public class EscUI : MonoBehaviour
 {
+    public static EscUI Instance { get; private set; }
     [SerializeField] private GameObject escPanel;
     [SerializeField] private Button     settingsButton;
     [SerializeField] private Button     saveButton;
     [SerializeField] private Button     quitButton;
     [SerializeField] private GameObject settingsPanel; // SettingsUI 패널
+    
+    [Header("저장 슬롯")]
+    [SerializeField] private GameObject    saveSlotPanel;
+    [SerializeField] private SaveSlotUI[]  saveSlots;
+    [SerializeField] private Button        closeSavePanel;
 
     private bool _isOpen = false;
 
     private void Awake()
     {
+        if (Instance != null) { Destroy(gameObject); return; }
+        Instance = this;
+        DontDestroyOnLoad(gameObject.transform.root);
+        
         escPanel.SetActive(false);
         if (settingsPanel != null)
             settingsPanel.SetActive(false);
@@ -52,8 +62,18 @@ public class EscUI : MonoBehaviour
 
     private void OnSaveClick()
     {
-        // 나중에 구현
-        Debug.Log("저장 (미구현)");
+        for (int i = 0; i < saveSlots.Length; i++)
+        {
+            SaveData data     = SaveSystem.Instance.GetSlotData(i);
+            saveSlots[i].InitForSave(i, data, (idx) =>
+            {
+                SaveSystem.Instance.Save(idx);
+                saveSlotPanel.SetActive(false);
+                NotificationManager.Instance?.ShowMessage(
+                    $"슬롯 {idx + 1}에 저장되었습니다.");
+            });
+        }
+        saveSlotPanel.SetActive(true);
     }
 
     private void OnQuitClick()
