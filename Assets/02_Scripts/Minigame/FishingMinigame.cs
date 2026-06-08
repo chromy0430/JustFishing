@@ -17,6 +17,13 @@ public class FishingMinigame : MonoBehaviour
     [SerializeField] private RectTransform goodZone;      // 판정 기준점 (GoodZone)
     [SerializeField] private RectTransform noteSpawnArea;
     
+    [Header("강화 효과")]
+    [SerializeField] private UpgradeEffectData upgradeEffectData;
+    private float _gaugeBonus;
+    private float _noteSpeed;
+    private float _missPenalty;
+    private float _badPenalty;
+    
     [Header("이미지 설정")]
     [SerializeField] private Image        centerZoneImage;  // Img_CenterZone의 Image
     [SerializeField] private List<Sprite> noteSprites;      // 노트 이미지 리스트
@@ -60,24 +67,37 @@ public class FishingMinigame : MonoBehaviour
 
     public void StartMinigame(FishingData fishingData, FishData fishData, Action<bool> onResult)
     {
-        _fishingData = fishingData;
-        _fishData = fishData;
-        _onResult = onResult;
+        _fishingData  = fishingData;
+        _fishData     = fishData;
+        _onResult     = onResult;
         _captureGauge = CalculateStartGauge();
 
-        // 판정 존 크기를 FishData 기준으로 런타임 설정
-        perfectZone.sizeDelta = Vector2.one * (_fishData.perfectRange * 2f);
-        goodZone.sizeDelta = Vector2.one * (_fishData.goodRange * 2f);
+        // 강화 레벨
+        int rodLevel  = PlayerPrefs.GetInt("Upgrade_낚싯대", 0);
+        int reelLevel = PlayerPrefs.GetInt("Upgrade_릴",     0);
+        int lineLevel = PlayerPrefs.GetInt("Upgrade_낚싯줄", 0);
 
-        // PerfectZone의 CircleCollider2D 반지름도 업데이트
-        CircleCollider2D perfectCol = perfectZone.GetComponent<CircleCollider2D>();
-        CircleCollider2D goodCol = goodZone.GetComponent<CircleCollider2D>();
-        if (perfectCol != null) perfectCol.radius = _fishData.perfectRange;
-        if (goodCol != null) goodCol.radius = _fishData.goodRange;
-        
+        _gaugeBonus  = upgradeEffectData != null
+            ? rodLevel * upgradeEffectData.rodGaugeBonus : rodLevel * 2f;
+        _noteSpeed   = Mathf.Max(50f, fishData.noteSpeed
+                                      - (reelLevel * (upgradeEffectData?.reelSpeedReduction ?? 20f)));
+        _missPenalty = Mathf.Min(-1f, -7f
+                                      + lineLevel * (upgradeEffectData?.lineMissPenaltyReduction ?? 2f));
+        _badPenalty  = Mathf.Max(0f, 3f
+                                     - lineLevel * (upgradeEffectData?.lineMissPenaltyReduction ?? 2f) * 0.5f);
+
         // 중심원 이미지를 물고기 아이콘으로 변경
         if (centerZoneImage != null && fishData.fishSprite != null)
             centerZoneImage.sprite = fishData.fishSprite;
+
+        // 판정 존 크기 갱신
+        perfectZone.sizeDelta = Vector2.one * (_fishData.perfectRange * 2f);
+        goodZone.sizeDelta    = Vector2.one * (_fishData.goodRange    * 2f);
+
+        CircleCollider2D perfectCol = perfectZone.GetComponent<CircleCollider2D>();
+        CircleCollider2D goodCol    = goodZone.GetComponent<CircleCollider2D>();
+        if (perfectCol != null) perfectCol.radius = _fishData.perfectRange;
+        if (goodCol    != null) goodCol.radius    = _fishData.goodRange;
 
         _isPlaying = true;
         _activeNotes.Clear();
@@ -92,25 +112,22 @@ public class FishingMinigame : MonoBehaviour
     // SpawnNote - perfectZone 기준으로 목표 지점 설정
     private void SpawnNote()
     {
-        if (notePrefab == null) { Debug.LogError("notePrefab null"); return; }
+        if (notePrefab == null) return;
 
-        float angle = UnityEngine.Random.Range(0f, 360f) * Mathf.Deg2Rad;
-        float radius = 280f;
-        Vector2 spawnPos = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
-        Vector2 centerPos = perfectZone.anchoredPosition; // PerfectZone 중심이 목표
+        float   angle     = UnityEngine.Random.Range(0f, 360f) * Mathf.Deg2Rad;
+        float   radius    = 280f;
+        Vector2 spawnPos  = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
+        Vector2 centerPos = perfectZone.anchoredPosition;
 
-        GameObject noteObj = Instantiate(notePrefab, noteSpawnArea);
-        FishingNote note = noteObj.GetComponent<FishingNote>();
-        if (note == null) { Debug.LogError("FishingNote 없음"); return; }
-        
-        // 랜덤 노트 이미지 설정
+        GameObject  noteObj = Instantiate(notePrefab, noteSpawnArea);
+        FishingNote note    = noteObj.GetComponent<FishingNote>();
+        if (note == null) return;
+
         if (noteSprites != null && noteSprites.Count > 0)
-        {
-            Sprite randomSprite = noteSprites[UnityEngine.Random.Range(0, noteSprites.Count)];
-            note.SetSprite(randomSprite);
-        }
+            note.SetSprite(noteSprites[UnityEngine.Random.Range(0, noteSprites.Count)]);
 
-        note.Init(spawnPos, centerPos, _fishData.noteSpeed, this);
+        // _noteSpeed 사용 (릴 강화 반영)
+        note.Init(spawnPos, centerPos, _noteSpeed, this);
         _activeNotes.Add(note);
     }
 
@@ -166,29 +183,35 @@ public class FishingMinigame : MonoBehaviour
 
     public void OnNoteJudged(NoteJudgement judgement)
     {
-        float gaugeChange = judgement switch
+        switch (judgement)
         {
-            NoteJudgement.Perfect => GAUGE_PERFECT,
-            NoteJudgement.Good => GAUGE_GOOD,
-            NoteJudgement.Bad => GAUGE_BAD,
-            NoteJudgement.Miss => GAUGE_MISS,
-            _ => 0f
-        };
+            case NoteJudgement.Perfect:
+                _captureGauge += 12f + _gaugeBonus;
+                ShowJudgement(judgement, 12f + _gaugeBonus);
+                break;
+            case NoteJudgement.Good:
+                _captureGauge += 8f + _gaugeBonus;
+                ShowJudgement(judgement, 8f + _gaugeBonus);
+                break;
+            case NoteJudgement.Bad:
+                _captureGauge -= _badPenalty;
+                ShowJudgement(judgement, -_badPenalty);
+                break;
+            case NoteJudgement.Miss:
+                _captureGauge += _missPenalty;
+                ShowJudgement(judgement, _missPenalty);
+                break;
+        }
 
+        // Miss 제외 Pulse 효과 ← 누락됐던 부분
         if (judgement != NoteJudgement.Miss)
             centerZonePulse?.Pulse(judgement);
-        
-        ShowJudgement(judgement, gaugeChange);
 
-        // 게이지는 물고기 체력 기준으로 환산
-        // 예: 체력 200, +12 → FillAmount로 환산 = 12/200 = 0.06
-        _captureGauge += gaugeChange;
         _captureGauge = Mathf.Clamp(_captureGauge, 0f, _fishData.fishHp);
-
         UpdateGaugeUI();
 
-        if (_captureGauge >= _fishData.fishHp) EndMinigame(true);
-        else if (_captureGauge <= 0f) EndMinigame(false);
+        if      (_captureGauge >= _fishData.fishHp) EndMinigame(true);
+        else if (_captureGauge <= 0f)               EndMinigame(false);
     }
 
     private IEnumerator NoteSpawnRoutine()
@@ -204,17 +227,16 @@ public class FishingMinigame : MonoBehaviour
 
     private void ShowJudgement(NoteJudgement judgement, float gaugeChange)
     {
-        string text = judgement.ToString();
-        Color color = judgement switch
+        string text  = judgement.ToString();
+        Color  color = judgement switch
         {
             NoteJudgement.Perfect => Color.yellow,
-            NoteJudgement.Good => Color.green,
-            NoteJudgement.Bad => Color.white,
-            NoteJudgement.Miss => Color.red,
-            _ => Color.white
+            NoteJudgement.Good    => Color.green,
+            NoteJudgement.Bad     => Color.white,
+            NoteJudgement.Miss    => Color.red,
+            _                     => Color.white
         };
 
-        // nameof 대신 Coroutine 레퍼런스로 관리
         if (_judgementCoroutine != null)
             StopCoroutine(_judgementCoroutine);
         _judgementCoroutine = StartCoroutine(JudgementFadeRoutine(text, color));
@@ -222,11 +244,12 @@ public class FishingMinigame : MonoBehaviour
 
     private IEnumerator JudgementFadeRoutine(string text, Color color)
     {
-        judgementText.text = text;
+        judgementText.text  = text;
         judgementText.color = color;
         judgementText.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(0.5f);
+
         judgementText.gameObject.SetActive(false);
         _judgementCoroutine = null;
     }
@@ -246,7 +269,7 @@ public class FishingMinigame : MonoBehaviour
         _activeNotes.Clear();
 
         centerZonePulse?.ClearImpacts();
-        
+
         minigamePanel.SetActive(false);
         _onResult?.Invoke(success);
     }

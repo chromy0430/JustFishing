@@ -15,6 +15,17 @@ public class BoatDurability : MonoBehaviour
     public event Action<float, float> OnDurabilityChanged;
     public event Action               OnDurabilityEmpty;
 
+    private void Start()
+    {
+        // 내구도 0 이벤트 구독
+        OnDurabilityEmpty += HandleDurabilityEmpty;
+    }
+
+    private void OnDestroy()
+    {
+        OnDurabilityEmpty -= HandleDurabilityEmpty;
+    }
+    
     public void SetLevelData(BoatLevelData levelData)
     {
         _levelData        = levelData;
@@ -86,4 +97,46 @@ public class BoatDurability : MonoBehaviour
     {
         this.waterZone = waterZone;
     }
+    
+    private void HandleDurabilityEmpty()
+    {
+        StartCoroutine(ForceReturnRoutine());
+    }
+    
+    private System.Collections.IEnumerator ForceReturnRoutine()
+    {
+        // 경고 알람
+        NotificationManager.Instance?.ShowMessage(
+            "⚠️ 보트 내구도가 0이 되었습니다!\n3초 후 섬으로 귀환합니다.");
+
+        // 보트 이동 즉시 차단
+        BoatController bc = GetComponent<BoatController>();
+        if (bc != null) bc.enabled = false;
+
+        yield return new WaitForSeconds(3f);
+
+        // 내구도 저장
+        SaveDurability();
+
+        // 플레이어 상태 정리
+        GameObject player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            if (player.TryGetComponent<CharacterController>(out var cc))
+                cc.enabled = true;
+            if (player.TryGetComponent<PlayerMove>(out var pm))
+                pm.enabled = true;
+
+            player.transform.SetParent(null);
+
+            if (player.TryGetComponent<PlayerModeController>(out var modeCtrl))
+                modeCtrl.OnLeaveBoat();
+
+            PlayerAnimator anim = player.GetComponentInChildren<PlayerAnimator>();
+            anim?.SetOnBoat(false);
+        }
+
+        SceneTransition.Instance?.TransitionToScene("Island");
+    }
+
 }

@@ -23,6 +23,16 @@ public class FishData : ScriptableObject
     public float maxLength   = 100f;  // 최대 길이 (cm)
     public float maxWeight   = 10f;   // 최대 무게 (kg)
     
+    [Header("보스 설정")]
+    public bool  isBoss          = false;
+    public int   bossPhaseCount  = 3;       // 페이즈 수
+    public float phase2HpRatio   = 0.66f;  // 2페이즈 전환 HP 비율
+    public float phase3HpRatio   = 0.33f;  // 3페이즈 전환 HP 비율
+
+    // 페이즈별 노트 속도
+    public float phase2NoteSpeed = 0f;     // 0이면 fishData.noteSpeed * 1.5 자동 계산
+    public float phase3NoteSpeed = 0f;     // 0이면 fishData.noteSpeed * 2.0 자동 계산
+    
     // 랜덤 길이 생성 (짧을수록 확률 높음)
     public float GetRandomLength()
     {

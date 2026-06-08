@@ -16,21 +16,21 @@ MonoBehaviour:
   levels:
   - toolTipTitle: "\uB098\uBB34 \uBCF4\uD2B8"
     toolTipDesc: "\uB098\uBB34\uB85C \uB9CC\uB4E4\uC5B4\uC9C4 \uBCF4\uD2B8\uB2E4."
-    toolTipStat: "\uD14C\uC2A4\uD2B8\uC911"
+    toolTipStat: "\uC18D\uB3C4 8 / \uB0B4\uAD6C\uB3C4 150"
     icon: {fileID: 21300000, guid: 213686725ac0e834b8fa8774ae72230f, type: 3}
     goldCost: 50
     requiredFish: {fileID: 0}
     requiredFishCount: 0
   - toolTipTitle: "\uCCA0 \uBCF4\uD2B8"
     toolTipDesc: "\uCCA0\uB85C \uB9CC\uB4E4\uC5B4\uC9C4 \uBCF4\uD2B8\uB2E4."
-    toolTipStat: "\uD14C\uC2A4\uD2B8\uC911"
+    toolTipStat: "\uC18D\uB3C4 12 / \uB0B4\uAD6C\uB3C4 300"
     icon: {fileID: 21300000, guid: 851e8fa52e18df445bb21ef00af340f1, type: 3}
     goldCost: 100
     requiredFish: {fileID: 0}
     requiredFishCount: 0
   - toolTipTitle: "\uB9C8\uB825\uC5D4\uC9C4 \uBCF4\uD2B8"
     toolTipDesc: "\uB9C8\uB825\uC5D4\uC9C4\uC774 \uB2EC\uB9B0 \uBE60\uB978 \uBCF4\uD2B8\uB2E4."
-    toolTipStat: "\uD14C\uC2A4\uD2B8\uC911"
+    toolTipStat: "\uC18D\uB3C4 15 / \uB0B4\uAD6C\uB3C4 1000"
     icon: {fileID: 21300000, guid: 6298f2cc485069a4c903dc803ce3c80f, type: 3}
     goldCost: 200
     requiredFish: {fileID: 0}
