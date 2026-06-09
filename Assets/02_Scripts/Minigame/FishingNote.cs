@@ -22,16 +22,42 @@ public class FishingNote : MonoBehaviour
     private bool _inMissZone = false;
     private float _missTimer = 0f;
     private float _missDelay = 0.1f;
+    
+    // 보스 페이드 효과 패턴
+    private bool  _fadeEffect = false;
+    private Image _image;
 
     public void Init(Vector2 startPos, Vector2 targetPos, float speed, FishingMinigame minigame)
     {
         _rt = GetComponent<RectTransform>();
+        _image        = GetComponent<Image>();
         _targetPos = targetPos;
         _speed = speed;
         _minigame = minigame;
+        _fadeEffect   = false;
 
         _rt.anchoredPosition = startPos;
         _rt.sizeDelta = new Vector2(_startSize, _startSize);
+    }
+    
+    public void InitBoss(Vector2 startPos, Vector2 targetPos,
+        BossNoteData bossData, FishingMinigame minigame)
+    {
+        _rt           = GetComponent<RectTransform>();
+        _image        = GetComponent<Image>();
+        _targetPos    = targetPos;
+        _minigame     = minigame;
+        _fadeEffect   = bossData.fadeEffect;
+        _speed        = Random.Range(bossData.minSpeed, bossData.maxSpeed);
+
+        // 랜덤 속도
+        _speed = Random.Range(bossData.minSpeed, bossData.maxSpeed);
+
+        _rt.anchoredPosition = startPos;
+        _rt.sizeDelta        = new Vector2(_startSize, _startSize);
+
+        if (_image != null)
+            _image.color = Color.white;
     }
 
     private void Update()
@@ -47,8 +73,14 @@ public class FishingNote : MonoBehaviour
         // 중심 가까울수록 크기 증가
         float dist = Vector2.Distance(_rt.anchoredPosition, _targetPos);
         float ratio = 1f - Mathf.Clamp01(dist / _spawnRadius);
+        
+        // 크기 변화
         float size = Mathf.Lerp(_startSize, _endSize, ratio);
         _rt.sizeDelta = new Vector2(size, size);
+        
+        // 페이드 효과
+        if (_fadeEffect && _image != null)
+            _image.color = new Color(1f, 1f, 1f, 1f - ratio * 0.8f);
 
         // 중심 도달 시 Miss 유예
         if (dist < 5f)

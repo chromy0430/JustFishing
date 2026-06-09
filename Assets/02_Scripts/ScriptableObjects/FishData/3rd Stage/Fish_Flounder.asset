@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 947b8eca7800bbf48b6e6b865c9a5c06, type: 3}
+  m_Name: Fish_Flounder
+  m_EditorClassIdentifier: Assembly-CSharp::FishData
+  fishName: "\uAD11\uC5B4"
+  fishDescription: "\uBC14\uB2E4 \uBC14\uB2E5\uC5D0 \uBAB8\uC744 \uC228\uAE34 \uCC44
+    \uAE30\uD68C\uB97C \uB178\uB9AC\uB294 \uBB3C\uACE0\uAE30.\r\n\uB113\uC740 \uBAB8\uC9D1
+    \uB355\uBD84\uC5D0 \uB6F0\uC5B4\uB09C \uC0C1\uD488 \uAC00\uCE58\uB97C \uC790\uB791\uD55C\uB2E4."
+  fishSprite: {fileID: 21300000, guid: 433775fcbc9d9ae4ab3d71be91eafb17, type: 3}
+  fishHp: 800
+  noteSpeed: 500
+  notesPerSecond: 5.5
+  rhythmPattern: 0
+  perfectRange: 15
+  goodRange: 22
+  basePrice: 1200
+  maxLength: 100
+  maxWeight: 12
+  isBoss: 0
+  bossPhaseCount: 3
+  phase2HpRatio: 0.66
+  phase3HpRatio: 0.33
+  phase2NoteSpeed: 0
+  phase3NoteSpeed: 0

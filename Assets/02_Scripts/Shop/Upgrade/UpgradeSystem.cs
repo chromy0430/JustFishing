@@ -5,6 +5,8 @@ using UnityEngine;
 public class UpgradeSystem : MonoBehaviour
 {
     public static UpgradeSystem Instance { get; private set; }
+    
+    [SerializeField] private BoatData boatData;
 
     [SerializeField] private List<UpgradeData> upgradeDataList;
     // UpgradeSystem.cs - UpgradeDataList 공개
@@ -84,6 +86,18 @@ public class UpgradeSystem : MonoBehaviour
 
         if (data.toolName == "양동이")
             InventorySystem.Instance?.UpgradeBucket();
+        
+        if (data.toolName == "보트")
+        {
+            int newLevel = _levels[data.toolName];
+            if (boatData != null && newLevel < boatData.levels.Length)
+            {
+                float newMaxDur = boatData.levels[newLevel].maxDurability;
+                PlayerPrefs.SetFloat("BoatDurability", newMaxDur);
+                PlayerPrefs.Save();
+                Debug.Log($"보트 업그레이드 → 내구도 {newMaxDur}으로 초기화");
+            }
+        }
 
         AudioManager.Instance?.PlayEnhance();
         OnUpgradeChanged?.Invoke();

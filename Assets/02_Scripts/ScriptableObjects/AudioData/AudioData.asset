@@ -18,10 +18,15 @@ MonoBehaviour:
   bgmLobby: {fileID: 8300000, guid: b0600c233d3d2854cb2f77b6bd1f6a22, type: 3}
   bgmOcean01: {fileID: 8300000, guid: 9bc1e1f892c85a94bb6607acf6754115, type: 3}
   bgmOcean02: {fileID: 8300000, guid: 0cbcf5b2f14714548a1f02b442737c8f, type: 3}
+  bgmMainMenu01: {fileID: 8300000, guid: 93a9275139e50564e817792a50254f74, type: 3}
+  bgmMainMenu02: {fileID: 8300000, guid: 49a4447a8d717234cb6ec584fa90ad5d, type: 3}
   sfxEnhance: {fileID: 8300000, guid: 8ed2261fd0a7c5444a954fb2d058b228, type: 3}
   sfxPurchase: {fileID: 8300000, guid: 1e9fad67cf85edd4ab2017ea7106eab9, type: 3}
   sfxShipMoving: {fileID: 8300000, guid: 2bff76eee7d70124eb8ade72309f7b12, type: 3}
   sfxSplash: {fileID: 8300000, guid: ae969fc90b98c924ca1f29449c300ce2, type: 3}
   sfxUIClick: {fileID: 8300000, guid: b9f593e523f94ab4b92df4b2e34fdca2, type: 3}
-  bgmVolume: 0.5
-  sfxVolume: 1
+  sfxPerfect: {fileID: 8300000, guid: 64798e497592a6144b49df6e672c0620, type: 3}
+  sfxGood: {fileID: 8300000, guid: 99128c28ee2920447969dd52bfa1d702, type: 3}
+  sfxMiss: {fileID: 8300000, guid: 2eac93ecf8135344ba9a5e53577ee4e1, type: 3}
+  bgmVolume: 0.2888881
+  sfxVolume: 0.38632435

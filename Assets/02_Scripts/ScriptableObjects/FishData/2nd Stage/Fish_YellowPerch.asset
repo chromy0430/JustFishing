@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 947b8eca7800bbf48b6e6b865c9a5c06, type: 3}
+  m_Name: Fish_YellowPerch
+  m_EditorClassIdentifier: Assembly-CSharp::FishData
+  fishName: "\uB178\uB780\uC0C9\uAC00\uC2DC\uB3D4"
+  fishDescription: "\uD669\uAE08\uBE5B\uC5D0 \uAC00\uAE4C\uC6B4 \uB178\uB780 \uBE44\uB298\uC744
+    \uAC00\uC9C4 \uBB3C\uACE0\uAE30.\r\n\uD587\uBE5B \uC544\uB798\uC5D0\uC11C \uC720\uB09C\uD788
+    \uB208\uC5D0 \uB748\uB2E4."
+  fishSprite: {fileID: 21300000, guid: bca7ad9e4029b8e45837aa302adf13f5, type: 3}
+  fishHp: 220
+  noteSpeed: 300
+  notesPerSecond: 3
+  rhythmPattern: 0
+  perfectRange: 28
+  goodRange: 45
+  basePrice: 180
+  maxLength: 40
+  maxWeight: 2
+  isBoss: 0
+  bossPhaseCount: 3
+  phase2HpRatio: 0.66
+  phase3HpRatio: 0.33
+  phase2NoteSpeed: 0
+  phase3NoteSpeed: 0

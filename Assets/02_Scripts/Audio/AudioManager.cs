@@ -100,7 +100,10 @@ public class AudioManager : MonoBehaviour
         string sceneName = SceneManager.GetActiveScene().name;
         switch (sceneName)
         {
-            case "MainScene":
+            case "Start":
+                PlayBGM_MainMenu();
+                break;
+            case "Island":
                 PlayBGM_Lobby();
                 break;
             case "Ocean":
@@ -110,6 +113,17 @@ public class AudioManager : MonoBehaviour
     }
 
     // ==================== BGM ====================
+    
+    public void PlayBGM_MainMenu()
+    {
+        if (_bgmRoutine != null) StopCoroutine(_bgmRoutine);
+
+        // BGM 2개면 번갈아, 1개면 루프
+        if (audioData.bgmMainMenu02 != null)
+            _bgmRoutine = StartCoroutine(MainMenuBGMRoutine());
+        else
+            CrossFadeBGM(audioData.bgmMainMenu01);
+    }
 
     public void PlayBGM_Lobby()
     {
@@ -167,6 +181,20 @@ public class AudioManager : MonoBehaviour
         fadeIn.volume  = 1f;
         _isAActive     = !_isAActive;
     }
+    
+    private IEnumerator MainMenuBGMRoutine()
+    {
+        bool playFirst = true;
+        while (true)
+        {
+            AudioClip clip = playFirst
+                ? audioData.bgmMainMenu01
+                : audioData.bgmMainMenu02;
+            CrossFadeBGM(clip);
+            yield return new WaitForSeconds(clip.length - crossFadeDuration);
+            playFirst = !playFirst;
+        }
+    }
 
     // ==================== SFX ====================
 
@@ -208,6 +236,19 @@ public class AudioManager : MonoBehaviour
 
     // 찌 착수 - 딜레이 없이 즉시 재생
     public void PlaySplash()   => PlaySFX(audioData.sfxSplash, allowOverlap: true);
+    
+    public void PlayJudgement(NoteJudgement judgement)
+    {
+        AudioClip clip = judgement switch
+        {
+            NoteJudgement.Perfect => audioData.sfxPerfect,
+            NoteJudgement.Good    => audioData.sfxGood,
+            NoteJudgement.Bad    => audioData.sfxMiss,
+            NoteJudgement.Miss   => audioData.sfxMiss,
+            _                     => audioData.sfxMiss
+        };
+        PlaySFX(clip, allowOverlap: false);
+    }
 
     // ==================== ShipMoving ====================
 

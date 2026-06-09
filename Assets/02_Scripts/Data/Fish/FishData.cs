@@ -25,6 +25,7 @@ public class FishData : ScriptableObject
     
     [Header("보스 설정")]
     public bool  isBoss          = false;
+    public BossNoteData bossNoteData;
     public int   bossPhaseCount  = 3;       // 페이즈 수
     public float phase2HpRatio   = 0.66f;  // 2페이즈 전환 HP 비율
     public float phase3HpRatio   = 0.33f;  // 3페이즈 전환 HP 비율

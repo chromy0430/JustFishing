@@ -17,6 +17,10 @@ public class FishingMinigame : MonoBehaviour
     [SerializeField] private RectTransform goodZone;      // 판정 기준점 (GoodZone)
     [SerializeField] private RectTransform noteSpawnArea;
     
+    public PlayerInputData InputData => inputData;
+    
+
+    
     [Header("강화 효과")]
     [SerializeField] private UpgradeEffectData upgradeEffectData;
     private float _gaugeBonus;
@@ -183,6 +187,8 @@ public class FishingMinigame : MonoBehaviour
 
     public void OnNoteJudged(NoteJudgement judgement)
     {
+        AudioManager.Instance?.PlayJudgement(judgement);
+        
         switch (judgement)
         {
             case NoteJudgement.Perfect:
@@ -283,6 +289,12 @@ public class FishingMinigame : MonoBehaviour
     {
         // 물고기 체력의 10%
         return _fishData.fishHp * 0.1f;
+    }
+    
+    public void HideCaptureGauge()
+    {
+        if (captureGaugeFill != null)
+            captureGaugeFill.transform.parent.gameObject.SetActive(false);
     }
 
 }

@@ -13,15 +13,22 @@ MonoBehaviour:
   m_Name: Fish_PaleChub
   m_EditorClassIdentifier: Assembly-CSharp::FishData
   fishName: "\uD53C\uB77C\uBBF8"
-  fishDescription: "\uBC14\uB2E4\uC5D0 \uC0AC\uB294 \uD53C\uB77C\uBBF8\uB2E4.\n\uAF64
-    \uB0A9\uC791\uD558\uB2E4."
+  fishDescription: "\uC740\uBE5B \uBE44\uB298\uC774 \uBC18\uC9DD\uC774\uB294 \uC791\uC740
+    \uBB3C\uACE0\uAE30.\r\n\uC12C \uC8FC\uBCC0\uC758 \uC595\uC740 \uBC14\uB2E4\uC5D0\uC11C
+    \uBB34\uB9AC\uB97C \uC774\uB8E8\uC5B4 \uD5E4\uC5C4\uCE5C\uB2E4."
   fishSprite: {fileID: 21300000, guid: 1b8df63ef0e87ea4fb67dde069bd8166, type: 3}
-  fishHp: 80
-  noteSpeed: 240
-  notesPerSecond: 3
+  fishHp: 60
+  noteSpeed: 150
+  notesPerSecond: 1
   rhythmPattern: 0
-  perfectRange: 40
-  goodRange: 60
-  basePrice: 40
-  maxLength: 80
-  maxWeight: 10
+  perfectRange: 50
+  goodRange: 80
+  basePrice: 20
+  maxLength: 25
+  maxWeight: 0.5
+  isBoss: 0
+  bossPhaseCount: 3
+  phase2HpRatio: 0.66
+  phase3HpRatio: 0.33
+  phase2NoteSpeed: 0
+  phase3NoteSpeed: 0

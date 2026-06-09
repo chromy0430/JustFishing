@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 947b8eca7800bbf48b6e6b865c9a5c06, type: 3}
+  m_Name: Fish_CommonCarp
+  m_EditorClassIdentifier: Assembly-CSharp::FishData
+  fishName: "\uC789\uC5B4"
+  fishDescription: "\uC624\uB79C \uC138\uC6D4 \uD589\uC6B4\uC758 \uC0C1\uC9D5\uC73C\uB85C
+    \uC5EC\uACA8\uC9C4 \uBB3C\uACE0\uAE30.\r\n\uCEE4\uB2E4\uB780 \uAC1C\uCCB4\uC77C\uC218\uB85D
+    \uB354\uC6B1 \uB192\uC740 \uAC00\uCE58\uB97C \uC9C0\uB2CC\uB2E4."
+  fishSprite: {fileID: 21300000, guid: da5dcca85b8831646876aa8bd080f3bb, type: 3}
+  fishHp: 400
+  noteSpeed: 380
+  notesPerSecond: 4
+  rhythmPattern: 0
+  perfectRange: 20
+  goodRange: 30
+  basePrice: 400
+  maxLength: 120
+  maxWeight: 20
+  isBoss: 0
+  bossPhaseCount: 3
+  phase2HpRatio: 0.66
+  phase3HpRatio: 0.33
+  phase2NoteSpeed: 0
+  phase3NoteSpeed: 0

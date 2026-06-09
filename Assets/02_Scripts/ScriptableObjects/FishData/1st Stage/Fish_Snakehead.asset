@@ -13,15 +13,22 @@ MonoBehaviour:
   m_Name: Fish_Snakehead
   m_EditorClassIdentifier: Assembly-CSharp::FishData
   fishName: "\uAC00\uBB3C\uCE58"
-  fishDescription: "\uBC14\uB2E4\uC5D0 \uC0AC\uB294 \uAC00\uBB3C\uCE58\uB2E4.\n\uC81C\uBC95
-    \uC0AC\uB098\uC6B4 \uB140\uC11D\uC774\uB2E4."
+  fishDescription: "\uAC15\uD55C \uD131\uACFC \uAC70\uB300\uD55C \uBAB8\uC9D1\uC744
+    \uAC00\uC9C4 \uC0AC\uB0E5\uAFBC.\r\n\uB09A\uC2EF\uC904\uC744 \uD33D\uD33D\uD558\uAC8C
+    \uB9CC\uB4DC\uB294 \uAC15\uB825\uD55C \uD798\uC744 \uC790\uB791\uD55C\uB2E4."
   fishSprite: {fileID: 21300000, guid: ed3c2c8a3a9724f47ac663a32168f97b, type: 3}
-  fishHp: 130
-  noteSpeed: 320
-  notesPerSecond: 4
+  fishHp: 180
+  noteSpeed: 260
+  notesPerSecond: 2.5
   rhythmPattern: 0
-  perfectRange: 40
-  goodRange: 60
-  basePrice: 80
-  maxLength: 105
-  maxWeight: 15
+  perfectRange: 30
+  goodRange: 50
+  basePrice: 120
+  maxLength: 80
+  maxWeight: 8
+  isBoss: 0
+  bossPhaseCount: 3
+  phase2HpRatio: 0.66
+  phase3HpRatio: 0.33
+  phase2NoteSpeed: 0
+  phase3NoteSpeed: 0

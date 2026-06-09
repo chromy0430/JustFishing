@@ -55,6 +55,6 @@ public class ReturnIslandUI : MonoBehaviour
         BoatDurability durability = FindFirstObjectByType<BoatDurability>();
         durability?.SaveDurability();
 
-        SceneTransition.Instance.TransitionToScene("MainScene");
+        SceneTransition.Instance.TransitionToScene("Island");
     }
 }

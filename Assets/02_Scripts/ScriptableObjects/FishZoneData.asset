@@ -18,13 +18,25 @@ MonoBehaviour:
   - {fileID: 7940447190375895385, guid: 337aaf1f557276d458894762052eb27f, type: 3}
   - {fileID: 2893364601022404374, guid: 3e233c03172edc0459fd35cd4a8d3f57, type: 3}
   - {fileID: 7766085013866591413, guid: bcd66a582e3096c48b7a63d0fb7f4164, type: 3}
-  zone2FishPrefabs: []
-  zone3FishPrefabs: []
+  zone2FishPrefabs:
+  - {fileID: 3203304307872101421, guid: 177099a5c4e767443a760c9d3fa1db87, type: 3}
+  - {fileID: 7901193688376818368, guid: a8220fe00a44e0b46ad7d480700a0f98, type: 3}
+  - {fileID: 5409436681277657879, guid: 50a0d555aaa810d46b207976352203fe, type: 3}
+  - {fileID: 1417767125688548522, guid: 670b54412223c2d439daad24f33416f9, type: 3}
+  - {fileID: 6721927161118748824, guid: d027cdeb94fa05e48b6a3e8909a5da8a, type: 3}
+  zone3FishPrefabs:
+  - {fileID: 4191010090998679382, guid: d41dd9aea5c83984ab6a3d1568a45d2e, type: 3}
   zone1FishData:
   - {fileID: 11400000, guid: 9db14db094328804583d7aa8484736f2, type: 2}
   - {fileID: 11400000, guid: 41215bb4a095afc4898382ed9fc3ac35, type: 2}
   - {fileID: 11400000, guid: 7c4c6a4e30eab6747baef855ac520c6e, type: 2}
   - {fileID: 11400000, guid: 9c5afc190acbe894a8bcbff0dbbe7c85, type: 2}
   - {fileID: 11400000, guid: 662da0eafc7c7cf4b9b1402049e06961, type: 2}
-  zone2FishData: []
-  zone3FishData: []
+  zone2FishData:
+  - {fileID: 11400000, guid: b123c88bf61ea2246b9d766d1ec05972, type: 2}
+  - {fileID: 11400000, guid: cbc719769716f7c4baad9ee4e82f7e30, type: 2}
+  - {fileID: 11400000, guid: 5555892e16a735d47afb9eea8b637f31, type: 2}
+  - {fileID: 11400000, guid: 236d3f997d0c0f74494c34248d93119e, type: 2}
+  - {fileID: 11400000, guid: 39255d39a8706e1498f1e5034abf9d15, type: 2}
+  zone3FishData:
+  - {fileID: 11400000, guid: da4c79996c04cc2428964f594c3482f1, type: 2}

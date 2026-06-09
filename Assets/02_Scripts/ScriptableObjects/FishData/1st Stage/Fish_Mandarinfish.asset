@@ -13,15 +13,22 @@ MonoBehaviour:
   m_Name: Fish_Mandarinfish
   m_EditorClassIdentifier: Assembly-CSharp::FishData
   fishName: "\uC3D8\uAC00\uB9AC"
-  fishDescription: "\uBC14\uB2E4\uC5D0 \uC0AC\uB294 \uC3D8\uAC00\uB9AC\uB2E4.\n\uC81C\uBC95
-    \uC544\uB984\uB2F5\uB2E4."
+  fishDescription: "\uB0A0\uB835\uD55C \uC6C0\uC9C1\uC784\uC744 \uAC00\uC9C4 \uD3EC\uC2DD\uC131
+    \uC5B4\uC885.\r\n\uD55C \uBC88 \uBA39\uC787\uAC10\uC744 \uB178\uB9AC\uBA74 \uBE60\uB974\uAC8C
+    \uB3CC\uC9C4\uD55C\uB2E4."
   fishSprite: {fileID: 21300000, guid: 76a2234b58374ff48b281f3be6d7b3ff, type: 3}
-  fishHp: 150
-  noteSpeed: 280
-  notesPerSecond: 3
+  fishHp: 130
+  noteSpeed: 230
+  notesPerSecond: 2.2
   rhythmPattern: 0
-  perfectRange: 40
-  goodRange: 60
+  perfectRange: 35
+  goodRange: 55
   basePrice: 80
-  maxLength: 30
-  maxWeight: 10
+  maxLength: 55
+  maxWeight: 4
+  isBoss: 0
+  bossPhaseCount: 3
+  phase2HpRatio: 0.66
+  phase3HpRatio: 0.33
+  phase2NoteSpeed: 0
+  phase3NoteSpeed: 0

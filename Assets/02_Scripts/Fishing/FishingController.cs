@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class FishingController : MonoBehaviour
 {
+    [SerializeField] private BossFishingMinigame bossMiniGame;
     public enum FishingState { Idle, Aiming, Casting, Waiting, Biting, Minigame, Result }
 
     [Header("Data")]
@@ -179,6 +180,12 @@ public class FishingController : MonoBehaviour
 
             playerAnimator?.SetBiting(true);
             SetState(FishingState.Minigame);
+            
+            if (_currentFishData.isBoss && bossMiniGame != null)
+                bossMiniGame.StartBossMinigame(_currentFishData, OnMinigameResult);
+            else
+                minigame.StartMinigame(fishingData, _currentFishData, OnMinigameResult);
+            
             _bobber.PlaySplash();
             minigame.StartMinigame(fishingData, _currentFishData, OnMinigameResult);
         }

@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 947b8eca7800bbf48b6e6b865c9a5c06, type: 3}
+  m_Name: Fish_ChannelCatfish
+  m_EditorClassIdentifier: Assembly-CSharp::FishData
+  fishName: "\uC2EC\uC5F0 \uBA54\uAE30"
+  fishDescription: "\uAC70\uB300\uD55C \uCCB4\uAD6C\uB97C \uAC00\uC9C4 \uC218\uC5FC
+    \uBB3C\uACE0\uAE30.\r\n\uD798\uC774 \uC88B\uC544 \uB9CE\uC740 \uB09A\uC2DC\uAFBC\uB4E4\uC758
+    \uBAA9\uD45C\uAC00 \uB41C\uB2E4."
+  fishSprite: {fileID: 21300000, guid: 6fcab7000abccef449d1c6c5db86d7cf, type: 3}
+  fishHp: 320
+  noteSpeed: 360
+  notesPerSecond: 3.5
+  rhythmPattern: 0
+  perfectRange: 22
+  goodRange: 35
+  basePrice: 300
+  maxLength: 100
+  maxWeight: 15
+  isBoss: 0
+  bossPhaseCount: 3
+  phase2HpRatio: 0.66
+  phase3HpRatio: 0.33
+  phase2NoteSpeed: 0
+  phase3NoteSpeed: 0
