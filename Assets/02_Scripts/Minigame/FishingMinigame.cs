@@ -19,7 +19,8 @@ public class FishingMinigame : MonoBehaviour
     
     public PlayerInputData InputData => inputData;
     
-
+    public event Action<float> OnGaugeChanged;
+    public FishingData GetFishingData() => _fishingData;
     
     [Header("강화 효과")]
     [SerializeField] private UpgradeEffectData upgradeEffectData;
@@ -263,6 +264,7 @@ public class FishingMinigame : MonoBehaviour
     private void UpdateGaugeUI()
     {
         captureGaugeFill.fillAmount = _captureGauge / _fishData.fishHp;
+        OnGaugeChanged?.Invoke(_captureGauge); // 추가
     }
 
     private void EndMinigame(bool success)

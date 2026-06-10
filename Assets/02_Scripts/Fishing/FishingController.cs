@@ -181,10 +181,24 @@ public class FishingController : MonoBehaviour
             playerAnimator?.SetBiting(true);
             SetState(FishingState.Minigame);
             
-            if (_currentFishData.isBoss && bossMiniGame != null)
+            if (_currentFishData.isBoss)
+            {
+                Debug.Log("보스 미니게임 시작 시도");
+
+                if (bossMiniGame == null)
+                {
+                    Debug.LogError("bossMiniGame이 null - Inspector 연결 확인");
+                    // 폴백으로 일반 미니게임 실행
+                    minigame.StartMinigame(fishingData, _currentFishData, OnMinigameResult);
+                    return;
+                }
+
                 bossMiniGame.StartBossMinigame(_currentFishData, OnMinigameResult);
+            }
             else
+            {
                 minigame.StartMinigame(fishingData, _currentFishData, OnMinigameResult);
+            }
             
             _bobber.PlaySplash();
             minigame.StartMinigame(fishingData, _currentFishData, OnMinigameResult);

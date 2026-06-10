@@ -29,6 +29,8 @@ MonoBehaviour:
   maxLength: 180
   maxWeight: 30
   isBoss: 1
+  customSpawnHeight: -3
+  useCustomHeight: 1
   bossNoteData:
     minSpeed: 150
     maxSpeed: 350

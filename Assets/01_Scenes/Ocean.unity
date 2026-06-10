@@ -1238,6 +1238,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 199967511}
+  - {fileID: 862061562}
   m_Father: {fileID: 1461165996}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -2823,6 +2824,143 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
+--- !u!1 &862061561
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 862061562}
+  - component: {fileID: 862061564}
+  - component: {fileID: 862061563}
+  m_Layer: 0
+  m_Name: Txt_ComboTimer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &862061562
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862061561}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 536316525}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 42.555, y: -24.355}
+  m_SizeDelta: {x: 65.11, y: 38.71}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &862061563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862061561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: "\uC5F0\uD0C0!"
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 811d086fe3a9f4b408c040579aafe382, type: 2}
+  m_sharedMaterial: {fileID: -3854049982843725450, guid: 811d086fe3a9f4b408c040579aafe382, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294936401
+  m_fontColor: {r: 0.31764707, g: 0.5294118, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 30
+  m_fontSizeBase: 30
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 1
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 4096
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &862061564
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 862061561}
+  m_CullTransparentMesh: 1
 --- !u!1 &863050519
 GameObject:
   m_ObjectHideFlags: 0
@@ -3517,6 +3655,7 @@ GameObject:
   - component: {fileID: 1178365051}
   - component: {fileID: 1178365050}
   - component: {fileID: 1178365053}
+  - component: {fileID: 1178365054}
   m_Layer: 0
   m_Name: UI_MiniGame
   m_TagString: Untagged
@@ -3646,6 +3785,28 @@ MonoBehaviour:
   notePrefab: {fileID: 1362394923323769501, guid: ca89a8938a505404385e0beddcbfd5dd, type: 3}
   inputData: {fileID: 11400000, guid: fc2452022d1f75b44ab0dc6881459c45, type: 2}
   centerZonePulse: {fileID: 1917518698}
+--- !u!114 &1178365054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1178365048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c9344a8b0ab51a4e9141468c7b0c492, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossFishingMinigame
+  baseMiniGame: {fileID: 1178365053}
+  bossPanel: {fileID: 1461165995}
+  bossHpFill: {fileID: 373343465}
+  bossNameTxt: {fileID: 1051438404}
+  phaseTxt: {fileID: 608396321}
+  warningObj: {fileID: 1906184588}
+  warningTxt: {fileID: 914041158}
+  comboPanel: {fileID: 536316524}
+  comboCountTxt: {fileID: 660379152}
+  comboTimerTxt: {fileID: 862061563}
 --- !u!1 &1186478352
 GameObject:
   m_ObjectHideFlags: 0
@@ -3980,7 +4141,6 @@ GameObject:
   - component: {fileID: 1461165996}
   - component: {fileID: 1461165998}
   - component: {fileID: 1461165997}
-  - component: {fileID: 1461165999}
   m_Layer: 0
   m_Name: UI_BossMinigamePanel
   m_TagString: Untagged
@@ -4054,27 +4214,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1461165995}
   m_CullTransparentMesh: 1
---- !u!114 &1461165999
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1461165995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c9344a8b0ab51a4e9141468c7b0c492, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BossFishingMinigame
-  baseMiniGame: {fileID: 1178365053}
-  bossPanel: {fileID: 1461165995}
-  bossHpFill: {fileID: 373343465}
-  bossNameTxt: {fileID: 1051438404}
-  phaseTxt: {fileID: 608396321}
-  warningObj: {fileID: 1906184588}
-  warningTxt: {fileID: 914041158}
-  comboPanel: {fileID: 536316524}
-  comboCountTxt: {fileID: 660379152}
 --- !u!1 &1464581409
 GameObject:
   m_ObjectHideFlags: 0
@@ -4642,7 +4781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7a40f4b854a0c34b9bd4f1408decdcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FishingController
-  bossMiniGame: {fileID: 1461165999}
+  bossMiniGame: {fileID: 1178365054}
   fishingData: {fileID: 11400000, guid: ac0078ea1c4a106489467abb4fee5178, type: 2}
   inputData: {fileID: 11400000, guid: fc2452022d1f75b44ab0dc6881459c45, type: 2}
   minigame: {fileID: 1178365053}

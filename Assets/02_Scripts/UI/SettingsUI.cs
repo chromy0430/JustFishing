@@ -52,7 +52,7 @@ public class SettingsUI : MonoBehaviour
         //DontDestroyOnLoad(this);
         
         InitResolutionDropdown();
-        ApplySavedSettings();
+        ApplySavedSettingsExceptVolume();
     }
 
     private void Start()
@@ -237,6 +237,25 @@ public class SettingsUI : MonoBehaviour
     {
         Resolution res = _supportedResolutions[index];
         Screen.SetResolution(res.width, res.height, Screen.fullScreen);
+    }
+    
+    private void ApplySavedSettingsExceptVolume()
+    {
+        // 해상도
+        int resIndex = PlayerPrefs.GetInt("Resolution", 1);
+        resIndex = Mathf.Clamp(resIndex, 0, _supportedResolutions.Length - 1);
+        Resolution res = _supportedResolutions[resIndex];
+        Screen.SetResolution(res.width, res.height, Screen.fullScreen);
+
+        // 전체화면
+        bool isFullscreen = PlayerPrefs.GetInt("Fullscreen", 0) == 1;
+        Screen.fullScreen = isFullscreen;
+
+        // 수직동기화
+        bool isVSync = PlayerPrefs.GetInt("VSync", 0) == 1;
+        QualitySettings.vSyncCount = isVSync ? 1 : 0;
+
+        // 볼륨은 AudioManager.Start()에서 처리
     }
     
     private void ApplySavedSettings()

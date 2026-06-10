@@ -23,7 +23,7 @@ MonoBehaviour:
   - m_enabled: 1
     m_path: Assets/01_Scenes/Start.unity
   - m_enabled: 1
-    m_path: Assets/01_Scenes/MainScene.unity
+    m_path: Assets/01_Scenes/Island.unity
   - m_enabled: 1
     m_path: Assets/01_Scenes/Ocean.unity
   m_HasScriptingDefines: 0

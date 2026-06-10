@@ -263,14 +263,29 @@ public class FishManager : MonoBehaviour
             GameObject[] prefabs = GetZonePrefabs(zone);
             if (prefabs == null || prefabs.Length == 0) continue;
 
-            Vector2    rand     = Random.insideUnitCircle * spawnRadius;
-            Vector3    spawnPos = playerTransform.position
-                                + new Vector3(rand.x, spawnHeight, rand.y);
+            // FishData 먼저 결정
+            FishData selectedFishData = zoneData.GetRandomFishData(zone);
 
-            GameObject prefab = prefabs[Random.Range(0, prefabs.Length)];
-            GameObject fish   = Instantiate(prefab, spawnPos, Quaternion.identity);
+            Vector2 rand     = Random.insideUnitCircle * spawnRadius;
 
-            FishAgent agent = fish.GetComponent<FishAgent>();
+            // 보스 전용 높이 처리
+            float height = spawnHeight; // 기본값
+            if (selectedFishData != null
+                && selectedFishData.isBoss
+                && selectedFishData.useCustomHeight)
+            {
+                height = selectedFishData.customSpawnHeight;
+                Debug.Log($"보스 물고기 스폰 높이: {height}");
+            }
+
+            Vector3 spawnPos = playerTransform.position
+                               + new Vector3(rand.x, height, rand.y);
+
+            // 해당 FishData에 맞는 프리팹 선택
+            GameObject prefab = GetPrefabForFishData(selectedFishData, zone, prefabs);
+
+            GameObject fish  = Instantiate(prefab, spawnPos, Quaternion.identity);
+            FishAgent  agent = fish.GetComponent<FishAgent>();
             if (agent == null) agent = fish.AddComponent<FishAgent>();
 
             agent.Init(spawnPos, zone);
@@ -346,5 +361,34 @@ public class FishManager : MonoBehaviour
             Gizmos.DrawLine(prev, next);
             prev = next;
         }
+    }
+    
+    private GameObject GetPrefabForFishData(FishData fishData, int zone,
+        GameObject[] defaultPrefabs)
+    {
+        if (fishData == null)
+            return defaultPrefabs[Random.Range(0, defaultPrefabs.Length)];
+
+        // FishZoneData에서 FishData 인덱스와 프리팹 인덱스를 매핑
+        FishData[] dataArr = zone switch
+        {
+            1 => zoneData.zone1FishData,
+            2 => zoneData.zone2FishData,
+            _ => zoneData.zone3FishData
+        };
+        GameObject[] prefabArr = zone switch
+        {
+            1 => zoneData.zone1FishPrefabs,
+            2 => zoneData.zone2FishPrefabs,
+            _ => zoneData.zone3FishPrefabs
+        };
+
+        for (int i = 0; i < dataArr.Length; i++)
+        {
+            if (dataArr[i] == fishData && i < prefabArr.Length)
+                return prefabArr[i];
+        }
+
+        return defaultPrefabs[Random.Range(0, defaultPrefabs.Length)];
     }
 }

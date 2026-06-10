@@ -25,6 +25,8 @@ public class FishData : ScriptableObject
     
     [Header("보스 설정")]
     public bool  isBoss          = false;
+    public float customSpawnHeight = 0f;    // 0이면 FishManager 기본값 사용
+    public bool  useCustomHeight  = false;  // true면 customSpawnHeight 사용
     public BossNoteData bossNoteData;
     public int   bossPhaseCount  = 3;       // 페이즈 수
     public float phase2HpRatio   = 0.66f;  // 2페이즈 전환 HP 비율

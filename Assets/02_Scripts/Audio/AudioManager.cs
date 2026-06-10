@@ -14,7 +14,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private float crossFadeDuration = 1.5f;
 
     [Header("SFX Pool")]
-    [SerializeField] private int sfxPoolSize = 8;
+    [SerializeField] private int sfxPoolSize = 16;
 
     private AudioSource _bgmSourceA;
     private AudioSource _bgmSourceB;
@@ -27,6 +27,13 @@ public class AudioManager : MonoBehaviour
     private Coroutine _bgmRoutine;
     private Coroutine _crossFadeRoutine;
     private Coroutine _shipFadeRoutine;
+    
+    private const string KEY_BGM_VOLUME = "BGMVolume";
+    private const string KEY_SFX_VOLUME = "SFXVolume";
+    
+    
+    private List<AudioSource> _judgementPool = new List<AudioSource>();
+    private const int JUDGEMENT_POOL_SIZE = 8;
 
     private void Awake()
     {
@@ -36,16 +43,13 @@ public class AudioManager : MonoBehaviour
 
         InitAudioSources();
 
-        // 볼륨 초기값 적용
-        SetBGMVolume(audioData.bgmVolume);
-        SetSFXVolume(audioData.sfxVolume);
-
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void Start()
     {
         // 첫 씬 BGM 시작 (Awake 이후 확실히 실행)
+        ApplySavedVolume();
         PlayBGMForCurrentScene();
     }
 
@@ -71,6 +75,13 @@ public class AudioManager : MonoBehaviour
         {
             AudioSource src = CreateAudioSource($"SFX_Pool_{i}", false, audioData.sfxMixerGroup);
             _sfxPool.Add(src);
+        }
+        
+        for (int i = 0; i < JUDGEMENT_POOL_SIZE; i++)
+        {
+            AudioSource src = CreateAudioSource(
+                $"Judgement_Pool_{i}", false, audioData.sfxMixerGroup);
+            _judgementPool.Add(src);
         }
     }
 
@@ -247,7 +258,23 @@ public class AudioManager : MonoBehaviour
             NoteJudgement.Miss   => audioData.sfxMiss,
             _                     => audioData.sfxMiss
         };
-        PlaySFX(clip, allowOverlap: false);
+        
+        if (clip == null) return;
+
+        // 판정음 전용 풀에서 빈 소스 찾기
+        AudioSource available = null;
+        foreach (AudioSource src in _judgementPool)
+        {
+            if (!src.isPlaying) { available = src; break; }
+        }
+
+        // 모두 재생 중이면 가장 오래된 것 재사용
+        if (available == null)
+            available = _judgementPool[0];
+
+        available.clip   = clip;
+        available.volume = 1f;
+        available.Play();
     }
 
     // ==================== ShipMoving ====================
@@ -307,18 +334,46 @@ public class AudioManager : MonoBehaviour
     public void SetBGMVolume(float volume)
     {
         audioData.bgmVolume = Mathf.Clamp01(volume);
-        float db = volume > 0f ? Mathf.Log10(volume) * 20f : -80f;
-        audioData.audioMixer.SetFloat("BGMVolume", db);
+        float db = volume > 0.001f ? Mathf.Log10(volume) * 20f : -80f;
+
+        if (audioData.audioMixer != null)
+        {
+            bool result = audioData.audioMixer.SetFloat("BGMVolume", db);
+            Debug.Log($"BGM 볼륨 설정: {volume} → {db}dB / 성공: {result}");
+        }
+        else
+        {
+            Debug.LogError("AudioMixer가 null");
+        }
+
+        PlayerPrefs.SetFloat("BGMVolume", volume);
     }
 
     public void SetSFXVolume(float volume)
     {
         audioData.sfxVolume = Mathf.Clamp01(volume);
-        float db = volume > 0f ? Mathf.Log10(volume) * 20f : -80f;
-        audioData.audioMixer.SetFloat("SFXVolume", db);
+        float db = volume > 0.001f ? Mathf.Log10(volume) * 20f : -80f;
+
+        if (audioData.audioMixer != null)
+            audioData.audioMixer.SetFloat("SFXVolume", db);
+
+        PlayerPrefs.SetFloat("SFXVolume", volume);
     }
 
     // 현재 볼륨 반환 (UI Slider 초기값 설정용)
     public float GetBGMVolume() => audioData.bgmVolume;
     public float GetSFXVolume() => audioData.sfxVolume;
+    
+    private void ApplySavedVolume()
+    {
+        float bgmVolume = PlayerPrefs.GetFloat("BGMVolume", 0.5f);
+        float sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 1.0f);
+
+        Debug.Log($"저장된 볼륨 로드: BGM={bgmVolume}, SFX={sfxVolume}");
+
+        SetBGMVolume(bgmVolume);
+        SetSFXVolume(sfxVolume);
+    }
+    
+    
 }
