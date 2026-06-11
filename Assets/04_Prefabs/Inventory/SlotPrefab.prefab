@@ -363,6 +363,7 @@ GameObject:
   - component: {fileID: 7517229235080339922}
   - component: {fileID: 1327159827391288370}
   - component: {fileID: 3133525924062038581}
+  - component: {fileID: 8969514465283501974}
   m_Layer: 0
   m_Name: Btn_Cancle
   m_TagString: Untagged
@@ -472,6 +473,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8969514465283501974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2887790581645250446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7eb071b55b8dc4dba68ac541018ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonAnim
+  hoverScale: 1.08
+  clickScale: 0.93
+  duration: 0.12
 --- !u!1 &3439243966138570680
 GameObject:
   m_ObjectHideFlags: 0
@@ -617,6 +633,7 @@ GameObject:
   - component: {fileID: 6083827777883000217}
   - component: {fileID: 2255030306168765943}
   - component: {fileID: 67095887046600923}
+  - component: {fileID: 4212690626270359609}
   m_Layer: 0
   m_Name: Btn_Confirm
   m_TagString: Untagged
@@ -726,6 +743,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4212690626270359609
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4566443511400402296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7eb071b55b8dc4dba68ac541018ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonAnim
+  hoverScale: 1.08
+  clickScale: 0.93
+  duration: 0.12
 --- !u!1 &6130089026177941101
 GameObject:
   m_ObjectHideFlags: 0
@@ -950,6 +982,7 @@ GameObject:
   - component: {fileID: 6574125095951633470}
   - component: {fileID: 5968260596718408812}
   - component: {fileID: 4520493236431696688}
+  - component: {fileID: 5216965175687616069}
   m_Layer: 0
   m_Name: Btn_Discard
   m_TagString: Untagged
@@ -1059,3 +1092,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5216965175687616069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8632853587990678660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7eb071b55b8dc4dba68ac541018ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonAnim
+  hoverScale: 1.08
+  clickScale: 0.93
+  duration: 0.12

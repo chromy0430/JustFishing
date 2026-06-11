@@ -205,7 +205,28 @@ public class SaveSystem : MonoBehaviour
         CurrentSlot = -1;
         _playTime   = 0f;
 
-        // 런타임 데이터만 초기화 (PlayerPrefs는 건드리지 않음)
+        // ── PlayerPrefs 전부 초기화 ──────────────────────────
+        // 골드
+        PlayerPrefs.SetInt("PlayerGold", 0);
+
+        // 강화 레벨
+        PlayerPrefs.SetInt("Upgrade_낚싯대", 0);
+        PlayerPrefs.SetInt("Upgrade_릴",     0);
+        PlayerPrefs.SetInt("Upgrade_낚싯줄", 0);
+        PlayerPrefs.SetInt("Upgrade_양동이", 0);
+        PlayerPrefs.SetInt("Upgrade_보트",   0);
+
+        // 내구도 (나무 보트 기본값)
+        PlayerPrefs.SetFloat("BoatDurability", 150f);
+
+        // 퀘스트
+        PlayerPrefs.DeleteKey("QuestID");
+        PlayerPrefs.DeleteKey("QuestProgress");
+        PlayerPrefs.DeleteKey("QuestState");
+
+        PlayerPrefs.Save();
+
+        // ── 런타임 데이터 초기화 ─────────────────────────────
         PlayerWallet.Instance?.ResetGold();
         InventorySystem.Instance?.ClearInventory();
         QuestSystem.Instance?.GenerateNewQuest();

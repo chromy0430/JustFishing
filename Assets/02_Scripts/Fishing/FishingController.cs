@@ -180,6 +180,7 @@ public class FishingController : MonoBehaviour
 
             playerAnimator?.SetBiting(true);
             SetState(FishingState.Minigame);
+            _bobber.PlaySplash();
             
             if (_currentFishData.isBoss)
             {
@@ -200,8 +201,6 @@ public class FishingController : MonoBehaviour
                 minigame.StartMinigame(fishingData, _currentFishData, OnMinigameResult);
             }
             
-            _bobber.PlaySplash();
-            minigame.StartMinigame(fishingData, _currentFishData, OnMinigameResult);
         }
     }
 

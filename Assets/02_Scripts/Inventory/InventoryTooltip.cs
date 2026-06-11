@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class InventoryTooltip : MonoBehaviour
 {
+    public static InventoryTooltip Instance { get; private set; }
     [SerializeField] private GameObject      tooltipPanel;
     [SerializeField] private TextMeshProUGUI nameTxt;
     [SerializeField] private TextMeshProUGUI descTxt;
@@ -13,6 +14,9 @@ public class InventoryTooltip : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null) { Destroy(gameObject); return; }
+        Instance = this;
+        
         tooltipPanel.SetActive(false);
     }
 

@@ -322,7 +322,7 @@ Material:
     - _ZClip: 0
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.15782525, g: 0.27440533, b: 0.3869086, a: 1}
+    - _BaseColor: {r: 0.2653292, g: 0.06683385, b: 0.11138976, a: 1}
     - _Color: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     - _DepthMapBounds: {r: -402.3, g: -459.43, b: 0.0012693577, a: 0}
     - _Direction: {r: 1, g: 1, b: 0, a: 0}
@@ -336,7 +336,7 @@ Material:
     - _IntersectionColor: {r: 1, g: 1, b: 1, a: 1}
     - _NormalTiling: {r: 0.1, g: 0.1, b: 0, a: 0}
     - _RimColor: {r: 1, g: 1, b: 1, a: 1}
-    - _ShallowColor: {r: 0.3102504, g: 0.2928524, b: 0.32762703, a: 1}
+    - _ShallowColor: {r: 0.17079763, g: 0.3156043, b: 0.3750122, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _WaterColor: {r: 0.21176466, g: 0.6745098, b: 1, a: 1}
     - _WaterShallowColor: {r: 0, g: 0.9394503, b: 1, a: 1}

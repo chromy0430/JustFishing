@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using UnityEngine.InputSystem;
 
 public class BossFishingMinigame : MonoBehaviour
 {
@@ -14,28 +15,44 @@ public class BossFishingMinigame : MonoBehaviour
     [SerializeField] private GameObject      bossPanel;
     [SerializeField] private Image           bossHpFill;
     [SerializeField] private TextMeshProUGUI bossNameTxt;
-    [SerializeField] private TextMeshProUGUI phaseTxt;
     [SerializeField] private GameObject      warningObj;
     [SerializeField] private TextMeshProUGUI warningTxt;
-
-    [Header("연타 UI")]
-    [SerializeField] private GameObject      comboPanel;
-    [SerializeField] private TextMeshProUGUI comboCountTxt;
-    [SerializeField] private TextMeshProUGUI comboTimerTxt;
 
     private FishData _fishData;
     private float    _bossMaxHp;
     private int      _currentPhase  = 1;
     private bool     _phaseChanging = false;
-    private bool     _comboActive   = false;
-    private int      _comboRemaining;
-    private float    _comboTimer;
     private Sequence _warningSeq;
+
+    // 페이즈별 속도 설정
+    private float _phase1MinSpeed;
+    private float _phase1MaxSpeed;
+    private float _phase2MinSpeed;
+    private float _phase2MaxSpeed;
+    private float _phase3MinSpeed;
+    private float _phase3MaxSpeed;
 
     private void Awake()
     {
         bossPanel.SetActive(false);
-        comboPanel.SetActive(false);
+    }
+    
+    private void Update()
+    {
+        // F3: 보스 패널 활성 + 디버그 패널 열린 상태에서만 작동
+        if (bossPanel != null
+            && bossPanel.activeSelf
+            && DebugPanel.Instance != null
+            && DebugPanel.Instance.IsOpen
+            && Keyboard.current.f3Key.wasPressedThisFrame)
+        {
+            Debug.Log("[F3] 보스 즉시 성공");
+            // ForceEndMinigame이 EndMinigame(true)를 호출
+            // → EndMinigame에서 _onResult(true) → EndBossMinigame 콜백 실행
+            // → bossPanel.SetActive(false) 자동 처리됨
+            baseMiniGame.ForceEndMinigame(true);
+            return;
+        }
     }
 
     public void StartBossMinigame(FishData fishData, Action<bool> onResult)
@@ -44,85 +61,114 @@ public class BossFishingMinigame : MonoBehaviour
         _bossMaxHp     = fishData.fishHp;
         _currentPhase  = 1;
         _phaseChanging = false;
-        _comboActive   = false;
+
+        // 페이즈별 속도 범위 계산
+        float baseSpeed = fishData.noteSpeed;
+        _phase1MinSpeed = baseSpeed * 0.7f;
+        _phase1MaxSpeed = baseSpeed * 1.3f;
+        _phase2MinSpeed = baseSpeed * 0.9f;
+        _phase2MaxSpeed = baseSpeed * 1.8f;
+        _phase3MinSpeed = baseSpeed * 1.2f;
+        _phase3MaxSpeed = baseSpeed * 2.5f;
 
         bossPanel.SetActive(true);
-        comboPanel.SetActive(false);
 
-        if (bossNameTxt != null) bossNameTxt.text = fishData.fishName;
-        UpdatePhaseUI();
-        UpdateBossHpUI(0f); // 시작 게이지 0
+        if (bossNameTxt != null)
+            bossNameTxt.text = "BOSS : " + fishData.fishName;
 
-        // 기존 게이지 숨기기
+        UpdateBossHpUI(0f);
+
         baseMiniGame.HideCaptureGauge();
-
-        // 게이지 변화 구독
         baseMiniGame.OnGaugeChanged += OnGaugeUpdated;
 
-        // 미니게임 시작
+        // 보스 전용 노트 스폰 방식으로 변경
+        baseMiniGame.SetBossNoteSpawnMode(true, _phase1MinSpeed, _phase1MaxSpeed);
+
         baseMiniGame.StartMinigame(baseMiniGame.GetFishingData(), fishData, (success) =>
         {
-            baseMiniGame.OnGaugeChanged -= OnGaugeUpdated;
-            bossPanel.SetActive(false);
-            comboPanel.SetActive(false);
-            _warningSeq?.Kill();
-            onResult?.Invoke(success);
+            EndBossMinigame(success, onResult);
         });
     }
 
-    // 게이지 변화 시 호출됨
+    private void EndBossMinigame(bool success, Action<bool> onResult)
+    {
+        baseMiniGame.OnGaugeChanged -= OnGaugeUpdated;
+        baseMiniGame.SetBossNoteSpawnMode(false, 0f, 0f);
+
+        _warningSeq?.Kill();
+        StopAllCoroutines();
+
+        _phaseChanging = false;
+
+        if (bossPanel  != null) bossPanel.SetActive(false);
+        if (warningObj != null)
+        {
+            warningObj.SetActive(false);
+            CanvasGroup cg = warningObj.GetComponent<CanvasGroup>();
+            if (cg != null) cg.alpha = 0f;
+        }
+
+        baseMiniGame.ShowCaptureGauge();
+        onResult?.Invoke(success);
+    }
+
     private void OnGaugeUpdated(float captureGauge)
     {
         UpdateBossHpUI(captureGauge);
+        
+        if (DebugPanel.Instance != null && DebugPanel.Instance.ConsumeBossInstantWin())
+        {
+            // 게이지를 최대로 채워서 EndMinigame(true) 유도
+            baseMiniGame.ForceEndMinigame(true);
+            return;
+        }
 
         if (_phaseChanging) return;
 
-        // 게이지 진행도로 페이즈 체크
         float progress = captureGauge / _bossMaxHp;
 
-        int newPhase = 1;
-        if (progress >= _fishData.phase2HpRatio) newPhase = 2;
-        if (progress >= _fishData.phase3HpRatio) newPhase = 3;
-
-        if (newPhase > _currentPhase)
-            StartCoroutine(PhaseChangeRoutine(newPhase));
-    }
-
-    private void UpdateBossHpUI(float captureGauge)
-    {
-        if (bossHpFill == null) return;
-        float ratio = captureGauge / _bossMaxHp;
-        bossHpFill.fillAmount = ratio;
-
-        // 진행될수록 색상 변화 (주황 → 빨강)
-        bossHpFill.color = Color.Lerp(
-            new Color(1f, 0.5f, 0f),
-            new Color(0.2f, 0.8f, 0.2f),
-            ratio);
+        // 핵심: 현재 페이즈 기준으로 딱 하나만 체크
+        if      (_currentPhase == 1 && progress >= _fishData.phase2HpRatio)
+            StartCoroutine(PhaseChangeRoutine(2));
+        else if (_currentPhase == 2 && progress >= _fishData.phase3HpRatio)
+            StartCoroutine(PhaseChangeRoutine(3));
     }
 
     private IEnumerator PhaseChangeRoutine(int newPhase)
     {
+        // 즉시 플래그 세팅 (같은 프레임에 중복 진입 차단)
         _phaseChanging = true;
+        _currentPhase  = newPhase; // 페이즈 먼저 바꿔서 중복 체크 차단
 
-        // 경고 텍스트
+        // 경고 연출
         if (warningObj != null && warningTxt != null)
         {
-            warningTxt.text = $"PHASE {newPhase}!";
+            warningTxt.text = newPhase switch
+            {
+                2 => "조금만 더 힘내세요!!",
+                3 => "이제 곧 잡혀요! 영차영차!!",
+                _ => $"Phase {newPhase}"
+            };
+
             warningObj.SetActive(true);
 
             CanvasGroup cg = warningObj.GetComponent<CanvasGroup>();
             if (cg == null) cg = warningObj.AddComponent<CanvasGroup>();
+            cg.alpha = 0f;
 
-            _warningSeq?.Kill();
-            _warningSeq = DOTween.Sequence();
+            // DOTween 깜빡임 (독립 Sequence로 생성)
+            Sequence seq = DOTween.Sequence();
             for (int i = 0; i < 3; i++)
             {
-                _warningSeq
-                    .Append(cg.DOFade(1f, 0.2f))
-                    .Append(cg.DOFade(0f, 0.2f));
+                seq.Append(cg.DOFade(1f, 0.25f))
+                   .AppendInterval(0.15f)
+                   .Append(cg.DOFade(0f, 0.25f));
             }
-            yield return _warningSeq.WaitForCompletion();
+
+            // _warningSeq에 보관 (EndBossMinigame에서 Kill 가능하도록)
+            _warningSeq = seq;
+            yield return seq.WaitForCompletion();
+
             warningObj.SetActive(false);
         }
         else
@@ -130,84 +176,35 @@ public class BossFishingMinigame : MonoBehaviour
             yield return new WaitForSeconds(1.2f);
         }
 
-        _currentPhase = newPhase;
-        UpdatePhaseUI();
-
         Debug.Log($"보스 페이즈 {newPhase} 시작");
 
-        // 페이즈 3에서 연타 노트 시작
-        if (newPhase == 3 && _fishData.bossNoteData != null
-            && _fishData.bossNoteData.comboNote)
+        // 페이즈별 노트 속도 변경
+        float minSpd = newPhase switch
         {
-            StartCoroutine(ComboNoteRoutine());
-        }
+            2 => _phase2MinSpeed,
+            3 => _phase3MinSpeed,
+            _ => _phase1MinSpeed
+        };
+        float maxSpd = newPhase switch
+        {
+            2 => _phase2MaxSpeed,
+            3 => _phase3MaxSpeed,
+            _ => _phase1MaxSpeed
+        };
+
+        baseMiniGame.SetBossNoteSpawnMode(true, minSpd, maxSpd);
 
         _phaseChanging = false;
     }
 
-    private IEnumerator ComboNoteRoutine()
+    private void UpdateBossHpUI(float captureGauge)
     {
-        yield return new WaitForSeconds(1.5f);
-
-        if (!bossPanel.activeSelf) yield break; // 미니게임 종료됐으면 중단
-
-        _comboActive    = true;
-        _comboRemaining = _fishData.bossNoteData.comboCount;
-        _comboTimer     = _fishData.bossNoteData.comboDuration;
-
-        comboPanel.SetActive(true);
-        UpdateComboUI();
-
-        Debug.Log($"연타 시작! {_comboRemaining}회 / {_comboTimer}초");
-    }
-
-    private void Update()
-    {
-        if (!_comboActive) return;
-
-        _comboTimer -= Time.deltaTime;
-
-        if (comboTimerTxt != null)
-            comboTimerTxt.text = $"{_comboTimer:F1}";
-
-        // 시간 초과
-        if (_comboTimer <= 0f)
-        {
-            _comboActive = false;
-            comboPanel.SetActive(false);
-            baseMiniGame.OnNoteJudged(NoteJudgement.Miss);
-            Debug.Log("연타 실패 - 시간 초과");
-            return;
-        }
-
-        // 스페이스바 입력
-        if (baseMiniGame.InputData != null && baseMiniGame.InputData.JumpPressed)
-        {
-            baseMiniGame.InputData.ConsumeJump();
-            _comboRemaining--;
-            UpdateComboUI();
-
-            AudioManager.Instance?.PlayJudgement(NoteJudgement.Good);
-
-            if (_comboRemaining <= 0)
-            {
-                _comboActive = false;
-                comboPanel.SetActive(false);
-                baseMiniGame.OnNoteJudged(NoteJudgement.Perfect);
-                Debug.Log("연타 성공!");
-            }
-        }
-    }
-
-    private void UpdateComboUI()
-    {
-        if (comboCountTxt != null)
-            comboCountTxt.text = $"{_comboRemaining}";
-    }
-
-    private void UpdatePhaseUI()
-    {
-        if (phaseTxt != null)
-            phaseTxt.text = $"PHASE {_currentPhase}";
+        if (bossHpFill == null) return;
+        float ratio = captureGauge / _bossMaxHp;
+        bossHpFill.fillAmount = ratio;
+        bossHpFill.color = Color.Lerp(
+            new Color(1f, 0.5f, 0f),
+            new Color(0.2f, 0.8f, 0.2f),
+            ratio);
     }
 }

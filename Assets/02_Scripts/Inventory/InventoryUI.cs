@@ -43,6 +43,8 @@ public class InventoryUI : MonoBehaviour
 
     private void OnDisable()
     {
+        InventoryTooltip.Instance?.Hide();
+
         if (InventorySystem.Instance != null)
             InventorySystem.Instance.OnInventoryChanged -= RefreshUI;
     }
@@ -58,6 +60,7 @@ public class InventoryUI : MonoBehaviour
     {
         _isOpen = !_isOpen;
         inventoryPanel.SetActive(_isOpen);
+        InventoryTooltip.Instance?.Hide();
 
         if (_isOpen) RefreshUI();
     }

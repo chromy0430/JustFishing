@@ -19,7 +19,7 @@ MonoBehaviour:
     \uC62C\uB9B0 \uC0AC\uB78C\uC740 \uD070 \uD589\uC6B4\uC744 \uC5BB\uB294\uB2E4\uB294
     \uC774\uC57C\uAE30\uAC00 \uC804\uD574\uC9C4\uB2E4."
   fishSprite: {fileID: 21300000, guid: 794e35d818c221c44b5085abf4098964, type: 3}
-  fishHp: 1500
+  fishHp: 1000
   noteSpeed: 550
   notesPerSecond: 6
   rhythmPattern: 0
@@ -27,7 +27,7 @@ MonoBehaviour:
   goodRange: 20
   basePrice: 5000
   maxLength: 180
-  maxWeight: 30
+  maxWeight: 50
   isBoss: 1
   customSpawnHeight: -3
   useCustomHeight: 1

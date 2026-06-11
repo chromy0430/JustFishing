@@ -1499,6 +1499,7 @@ GameObject:
   - component: {fileID: 3763739030893778031}
   - component: {fileID: 1507989613562655896}
   - component: {fileID: 3203797774986586203}
+  - component: {fileID: 5732608352864934292}
   m_Layer: 5
   m_Name: UI_Slot_2
   m_TagString: Untagged
@@ -1629,6 +1630,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &5732608352864934292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4555503168293074635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7eb071b55b8dc4dba68ac541018ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonAnim
+  hoverScale: 1.08
+  clickScale: 0.93
+  duration: 0.12
 --- !u!1 &4656427506741343773
 GameObject:
   m_ObjectHideFlags: 0
@@ -1718,6 +1734,7 @@ GameObject:
   - component: {fileID: 8632332516790161302}
   - component: {fileID: 2228108203452025320}
   - component: {fileID: 8155712679071043302}
+  - component: {fileID: 6546422958219747348}
   m_Layer: 5
   m_Name: UI_Slot_3
   m_TagString: Untagged
@@ -1848,6 +1865,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6546422958219747348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4972651808862991510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7eb071b55b8dc4dba68ac541018ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonAnim
+  hoverScale: 1.08
+  clickScale: 0.93
+  duration: 0.12
 --- !u!1 &5432061148469295907
 GameObject:
   m_ObjectHideFlags: 0
@@ -2546,6 +2578,7 @@ GameObject:
   - component: {fileID: 7209821749584109072}
   - component: {fileID: 6986330334061331015}
   - component: {fileID: 6721439524022124022}
+  - component: {fileID: 385170480381769857}
   m_Layer: 5
   m_Name: UI_Slot_1
   m_TagString: Untagged
@@ -2676,6 +2709,21 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &385170480381769857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6863870502263347164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d7eb071b55b8dc4dba68ac541018ef8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIButtonAnim
+  hoverScale: 1.08
+  clickScale: 0.93
+  duration: 0.12
 --- !u!1 &6874577030097889882
 GameObject:
   m_ObjectHideFlags: 0

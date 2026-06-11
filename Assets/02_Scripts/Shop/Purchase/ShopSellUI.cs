@@ -165,6 +165,7 @@ public class ShopSellUI : MonoBehaviour
         // 판매 목록 초기화
         _pendingSell.Clear();
         _totalPrice = 0;
+        InventoryTooltip.Instance?.Hide();
         UpdateTotalPriceUI();
 
         RefreshSellSlots();

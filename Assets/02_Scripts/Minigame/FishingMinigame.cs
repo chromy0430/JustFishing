@@ -64,6 +64,11 @@ public class FishingMinigame : MonoBehaviour
     private const float GAUGE_GOOD = 8f;
     private const float GAUGE_BAD = 3f;
     private const float GAUGE_MISS = -7f;
+    
+    // 보스 관련
+    private bool  _bossNoteMode  = false;
+    private float _bossMinSpeed  = 0f;
+    private float _bossMaxSpeed  = 0f;
 
     private void Awake()
     {
@@ -119,9 +124,9 @@ public class FishingMinigame : MonoBehaviour
     {
         if (notePrefab == null) return;
 
-        float   angle     = UnityEngine.Random.Range(0f, 360f) * Mathf.Deg2Rad;
-        float   radius    = 280f;
-        Vector2 spawnPos  = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
+        float   angle    = UnityEngine.Random.Range(0f, 360f) * Mathf.Deg2Rad;
+        float   radius   = 280f;
+        Vector2 spawnPos = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
         Vector2 centerPos = perfectZone.anchoredPosition;
 
         GameObject  noteObj = Instantiate(notePrefab, noteSpawnArea);
@@ -131,14 +136,28 @@ public class FishingMinigame : MonoBehaviour
         if (noteSprites != null && noteSprites.Count > 0)
             note.SetSprite(noteSprites[UnityEngine.Random.Range(0, noteSprites.Count)]);
 
-        // _noteSpeed 사용 (릴 강화 반영)
-        note.Init(spawnPos, centerPos, _noteSpeed, this);
+        if (_bossNoteMode)
+        {
+            // 보스 전용 초기화 (랜덤 속도 + 역방향 패턴)
+            note.InitBoss(spawnPos, centerPos, _bossMinSpeed, _bossMaxSpeed, this);
+        }
+        else
+        {
+            note.Init(spawnPos, centerPos, _noteSpeed, this);
+        }
+
         _activeNotes.Add(note);
     }
 
     private void Update()
     {
         if (!_isPlaying) return;
+        
+        if (DebugPanel.Instance != null && DebugPanel.Instance.ConsumeInstantWin())
+        {
+            EndMinigame(true);
+            return;
+        }
 
         if (inputData.JumpPressed)
         {
@@ -279,6 +298,8 @@ public class FishingMinigame : MonoBehaviour
         centerZonePulse?.ClearImpacts();
 
         minigamePanel.SetActive(false);
+
+        // 콜백은 패널 비활성화 이후에 호출
         _onResult?.Invoke(success);
     }
 
@@ -298,5 +319,23 @@ public class FishingMinigame : MonoBehaviour
         if (captureGaugeFill != null)
             captureGaugeFill.transform.parent.gameObject.SetActive(false);
     }
-
+    
+    public void ShowCaptureGauge()
+    {
+        if (captureGaugeFill != null)
+            captureGaugeFill.transform.parent.gameObject.SetActive(true);
+    }
+    
+    public void SetBossNoteSpawnMode(bool active, float minSpeed, float maxSpeed)
+    {
+        _bossNoteMode = active;
+        _bossMinSpeed = minSpeed;
+        _bossMaxSpeed = maxSpeed;
+    }
+    
+    public void ForceEndMinigame(bool success)
+    {
+        if (!_isPlaying) return;
+        EndMinigame(success);
+    }
 }
